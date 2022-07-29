@@ -1,0 +1,93 @@
+.tablaDocenteContainer{
+    padding: 20px;
+    background: transparent;
+    width: 1000px;
+    margin: auto;
+    max-height: 500px;
+    overflow: scroll;
+    border-radius: 30px;
+}
+
+.Docente{
+    padding: 20px;
+    border-radius: 20px;
+    max-height: 500px;
+    font-size: 15px;
+    margin: auto;
+}
+
+.Docente label{
+    font-weight: 500;
+}
+
+.Boton22{
+    border:none;
+    background-color: #293462;
+    color: #E7F6F2;
+}
+
+
+.tabla1{
+    width: 180px!important;
+}
+
+.tabla11{
+    width: 250px!important;
+}
+
+.navbar{
+    width: 260px;
+    height: 100vh;
+    margin-left: -200px;
+    position: fixed;
+    transition: 0.5s;
+    background-color: #293462;
+}
+
+.nav-link{
+    font-size: 1.25rem;
+    color: #A5C9CA;
+}
+
+.nav-link:active,
+.nav-link:focus,
+.nav-link:hover{
+    background-color: #293462;
+    color: #E7F6F2;
+    text-decoration: none;
+}
+
+
+.collapse-menu{
+    background-color: #293462;
+    
+}
+
+.collapse-item{
+    color: #A5C9CA;
+}
+
+.collapse-item:active,
+.collapse-item:focus,
+.collapse-item:hover{
+    background-color: #293462;
+    color: #E7F6F2;
+    text-decoration: none;
+}
+
+.all-toggle{
+    margin-left:400px;
+    transition: 0.5s;
+}
+
+.all-content{
+    transition: 0.5s;
+}
+
+.active-nav{
+    margin-left: 0;
+}
+
+.btn-nav{
+    margin: 15px 0px 0px 110px;
+}
