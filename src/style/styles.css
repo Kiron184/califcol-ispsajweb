@@ -41,37 +41,37 @@
     margin-left: -200px;
     position: fixed;
     transition: 0.5s;
-    background-color: white;
+    background-color: rgb(189, 189, 189);
 }
 
 .nav-link{
     font-size: 1.25rem;
-    color: #A5C9CA;
+    color: white;
 }
 
 .nav-link:active,
 .nav-link:focus,
 .nav-link:hover{
-    background-color: white;
-    color: #E7F6F2;
+    background-color:  rgb(189, 189, 189);
+    color: white;
     text-decoration: none;
 }
 
 
 .collapse-menu{
-    background-color: white;
+    background-color:  rgb(189, 189, 189);
     
 }
 
 .collapse-item{
-    color: #A5C9CA;
+    color: white;
 }
 
 .collapse-item:active,
 .collapse-item:focus,
 .collapse-item:hover{
-    background-color: white;
-    color: #E7F6F2;
+    background-color:  rgb(189, 189, 189);
+    color: white;
     text-decoration: none;
 }
 
