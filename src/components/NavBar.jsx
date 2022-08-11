@@ -10,7 +10,9 @@ export default function NavBar() {
   function handleClick(e) {
     e.preventDefault();
     document.querySelector(".navbar").classList.toggle("active-nav");
-    document.querySelector(".home").classList.toggle("active-home");
+    if (document.querySelector(".home")) {
+      document.querySelector(".home").classList.toggle("active-home");
+    }
   }
 
   return (

@@ -31,7 +31,7 @@ export default function Home() {
             <input
               placeholder="Buscar por Nombre"
               type="search"
-              className="form-control w-md-25 mx-sm-2 my-1 my-md-0"
+              className="form-control w-md-25 mx-md-2 my-1 my-md-0"
               onChange={(e) => {
                 return setSearch(e.target.value);
               }}
