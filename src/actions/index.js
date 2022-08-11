@@ -1,31 +1,48 @@
-import axios from "axios";
-
-export function crearDocente(info) {
+export function cargarDocentes(users) {
   return {
-    type: "CREAR_DOCENTE",
-    payload: info,
+    type: "CARGAR_DOCENTES",
+    payload: users,
   };
 }
 
-export function modificarDocente(info) {
+export function cargarDocentes2(users) {
   return {
-    type: "MODIFICAR_DOCENTE",
-    payload: info,
+    type: "CARGAR_DOCENTES2",
+    payload: users,
   };
 }
 
-export function borrarDocente(info) {
+export function cargarDocente(id) {
+  return {
+    type: "CARGAR_DOCENTE",
+    payload: id,
+  };
+}
+
+export function borrarDocente(id) {
   return {
     type: "BORRAR_DOCENTE",
-    payload: info,
+    payload: id,
   };
 }
 
-// export function traerDocentes(info) {
-//     return async function (dispatch){
-//         let json = await axios.get("https://www.califcolegios.wnpower.host/ipsaj/admin/docentes/div_lista_todos.php",{});
-//         return dispatch({
-//             type:'TRAER_DOCENTES',
-//             payload: json.data
-//         })
-//     }};
+export function modificarDocente(user) {
+  return {
+    type: "MODIFICAR_DOCENTE",
+    payload: user,
+  };
+}
+
+export function buscarDocente(id) {
+  return {
+    type: "BUSCAR_DOCENTE",
+    payload: id,
+  };
+}
+
+export function cargarMateriasVinculadas(materias) {
+  return {
+    type: "CARGAR_MATERIASVINCULADAS",
+    payload: materias,
+  };
+}

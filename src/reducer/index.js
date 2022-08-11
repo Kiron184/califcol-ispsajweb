@@ -1,6 +1,9 @@
-let orden = 1;
+// let orden = 1;
 const initialState = {
   users: [],
+  users2: [],
+  user: "",
+  materiasVinculadas: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -8,42 +11,45 @@ export default function rootReducer(state = initialState, action) {
     case "CARGAR_DOCENTES":
       return {
         ...state,
-        users: [action.payload],
+        users: action.payload,
       };
-    case "CREAR_DOCENTE":
+    case "CARGAR_DOCENTES2":
       return {
         ...state,
-        users: [...state.users, { ...action.payload, id: orden++ }],
+        users2: action.payload,
+      };
+    case "CARGAR_DOCENTE":
+      return {
+        ...state,
+        user: state.users.filter((u) => u[4] === action.payload),
       };
 
     case "BORRAR_DOCENTE":
       return {
         ...state,
-        users: state.users.filter((user) => user.id !== action.payload),
+        users: state.users.filter((u) => u[4] !== action.payload),
       };
 
-    case "TRAER_DOCENTES":
+    case "MODIFICAR_DOCENTE":
+      const docente = action.payload;
+      console.log(docente);
       return {
         ...state,
-        users: [...state.users, { ...action.payload, id: orden++ }],
+        users: state.users.map((u) => (u[4] === docente[4] ? docente : u)),
+        users2: state.users.map((u) => (u[4] === docente[4] ? docente : u)),
       };
-    case "MODIFICAR_DOCENTE":
-      if (action.payload.id) {
-        return {
-          ...state,
-          users: state.users.map((user) => {
-            if (user.id === action.payload.id) {
-              return {
-                ...user,
-                ...action.payload,
-              };
-            }
-            return user;
-          }),
-        };
-      }
 
-      return state;
+    case "BUSCAR_DOCENTE":
+      return {
+        ...state,
+        user: state.users.filter((u) => u[4] === action.payload),
+      };
+
+    case "CARGAR_MATERIASVINCULADAS":
+      return {
+        ...state,
+        materiasVinculadas: action.payload,
+      };
 
     default:
       return { ...state };

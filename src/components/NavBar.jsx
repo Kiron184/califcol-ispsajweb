@@ -1,105 +1,125 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import logo from "../utils/logo_menu.png";
+import menu from "../utils/menu.png";
+import profile from "../utils/user.png";
+import help from "../utils/help.png";
+import "../style/styles.css";
+import { NavLink } from "react-router-dom";
 
 export default function NavBar() {
-  return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-transparent">
-      <div class="container">
-        <a className="align-self-center" href="/">
-          <img alt="logo" src={logo}></img>
-        </a>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+  function handleClick(e) {
+    e.preventDefault();
+    document.querySelector(".navbar").classList.toggle("active-nav");
+    document.querySelector(".home").classList.toggle("active-home");
+  }
 
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav mr-auto">
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Admin. Datos
-              </a>
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a className="dropdown-item" href="#">
+  return (
+    <>
+      <nav
+        className="navbar navbar-expand d-flex flex-column align-item-start h-100"
+        id="sidebar"
+      >
+        <div className="d-flex flex-row justify-content-start">
+          <a href="/" className="navbar-brand text-light mt-1 mr-5">
+            <img alt="logo" src={logo} className="" />
+          </a>
+          <img
+            onClick={(e) => handleClick(e)}
+            className="btn-nav"
+            alt="logo"
+            src={menu}
+            width="30px"
+            height="30px"
+          />
+        </div>
+
+        <ul className="navbar-nav d-flex flex-column mt-5 w-100">
+          <li>
+            <a
+              href="#adminDatos"
+              data-toggle="collapse"
+              aria-expanded="false"
+              class="dropdown-toggle nav-link"
+            >
+              Admin. Datos
+            </a>
+            <ul class="collapse collapse-menu" id="adminDatos">
+              <li style={{ listStyle: "none" }}>
+                <a href="-" className="collapse-item">
                   Alumnos
                 </a>
-                <div className="dropdown-divider"></div>
-                <NavLink to="/home" className="dropdown-item">
+              </li>
+              <li style={{ listStyle: "none" }} onClick={(e) => handleClick(e)}>
+                <NavLink to="/home" className="collapse-item">
                   Docentes
                 </NavLink>
-                <div className="dropdown-divider"></div>
-                <a className="dropdown-item" href="#">
+              </li>
+              <li style={{ listStyle: "none" }}>
+                <a href="-" className="collapse-item">
                   Materias
                 </a>
-              </div>
-            </li>
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Calificaciones
-              </a>
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a className="dropdown-item" href="#">
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a
+              href="#calificaciones"
+              data-toggle="collapse"
+              aria-expanded="false"
+              class="dropdown-toggle nav-link"
+            >
+              Calificaciones
+            </a>
+            <ul class="collapse collapse-menu" id="calificaciones">
+              <li style={{ listStyle: "none" }}>
+                <a href="-" className="collapse-item">
                   Ingresar
                 </a>
-                <div className="dropdown-divider"></div>
-                <a className="dropdown-item" href="#">
+              </li>
+              <li style={{ listStyle: "none" }}>
+                <a href="-" className="collapse-item">
                   Mesas de Examen
                 </a>
-                <div className="dropdown-divider"></div>
-                <a className="dropdown-item" href="#">
+              </li>
+              <li style={{ listStyle: "none" }}>
+                <a href="-" className="collapse-item">
                   Boletines
                 </a>
-              </div>
-            </li>
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Inasistencias
-              </a>
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a className="dropdown-item" href="#">
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <a
+              href="#inasistencias"
+              data-toggle="collapse"
+              aria-expanded="false"
+              class="dropdown-toggle nav-link"
+            >
+              Inasistencias
+            </a>
+            <ul class="collapse collapse-menu" id="inasistencias">
+              <li style={{ listStyle: "none" }}>
+                <a href="-" className="collapse-item">
                   Ingresar
                 </a>
-                <div className="dropdown-divider"></div>
-                <a className="dropdown-item" href="#">
+              </li>
+              <li style={{ listStyle: "none" }}>
+                <a href="-" className="collapse-item">
                   Reincorporaciones
                 </a>
-              </div>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      {/* <div className="">
+        <div className="">
+          <img src={help} alt="help" />
+          <img src={profile} alt="profile" />
         </div>
-      </div>
-    </nav>
+      </div> */}
+    </>
   );
 }

@@ -1,40 +1,3 @@
-.tablaDocenteContainer{
-    padding: 20px;
-    background: transparent;
-    width: 1000px;
-    margin: auto;
-    max-height: 500px;
-    overflow: scroll;
-    border-radius: 30px;
-}
-
-.Docente{
-    padding: 20px;
-    border-radius: 20px;
-    max-height: 500px;
-    font-size: 15px;
-    margin: auto;
-}
-
-.Docente label{
-    font-weight: 500;
-}
-
-.Boton22{
-    border:none;
-    background-color: #293462;
-    color: #E7F6F2;
-}
-
-
-.tabla1{
-    width: 180px!important;
-}
-
-.tabla11{
-    width: 250px!important;
-}
-
 .navbar{
     width: 260px;
     height: 100vh;
@@ -42,6 +5,10 @@
     position: fixed;
     transition: 0.5s;
     background-color: rgb(189, 189, 189);
+}
+
+.home{
+    transition: 0.5s;
 }
 
 .nav-link{
@@ -75,19 +42,56 @@
     text-decoration: none;
 }
 
-.all-toggle{
-    margin-left:400px;
-    transition: 0.5s;
-}
-
-.all-content{
-    transition: 0.5s;
-}
-
 .active-nav{
     margin-left: 0;
+}
+
+.active-home{
+    margin-left: 260px !important;
 }
 
 .btn-nav{
     margin: 15px 0px 0px 110px;
 }
+.btn-nav:hover{
+    cursor: pointer;
+}
+
+.swal2-title{
+    font-size: 15px !important;
+}
+
+.swal2-html-container{
+    font-size: 12px !important;
+}
+
+.swal2-modal{
+    width: 300px !important;
+    height: 360px !important;
+}
+
+
+@media (max-width: 900px) {
+    .navbar {
+        background-color: transparent;
+        z-index: 10;
+    }
+
+    .active-nav{
+        background-color: rgb(189, 189, 189);
+    }
+
+    .active-home{
+        margin-left: 0px !important;
+    }
+
+    .collapse-menu{
+        background-color: transparent;
+    }   
+
+  }
+
+
+
+
+

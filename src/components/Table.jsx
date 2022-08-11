@@ -1,82 +1,155 @@
-import React, { useEffect, useState } from "react";
-import { NavLink, withRouter } from "react-router-dom";
+import React, { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import axios from "axios";
 import "../style/styles.css";
+import trash from "../utils/delete.png";
+import edit from "../utils/edit.png";
+import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { cargarDocentes, borrarDocente } from "../actions";
+import { useSelector } from "react-redux/es/exports";
 
-export default function Table() {
-  //const users = useSelector((state) => state.users);
-  const [users, setUsers] = useState([]);
+export default function Table({ name, filter }) {
+  const dispatch = useDispatch();
+
+  const docentes = useSelector((state) => state.users);
+
+  function cargarTabla() {
+    if (name.length > 3 || !name) {
+      axios
+        .get(
+          "https://www.califcolegios.wnpower.host/app/traerdocentes.php?txnombre=" +
+            name +
+            "&filtro=" +
+            filter
+        )
+        .then((response) => {
+          console.log(response.data);
+          return dispatch(cargarDocentes(response.data));
+        });
+    }
+  }
 
   useEffect(() => {
-    axios
-      .get(
-        "https://www.califcolegios.wnpower.host/app/traerdocentes.php?txnombre="
+    cargarTabla();
+  }, [name, filter]);
+
+  async function eliminarDocente(id) {
+    await axios
+      .post(
+        "https://www.califcolegios.wnpower.host/app/grabardatosdocentes.php?oper=" +
+          "B" +
+          "&iddocente=" +
+          id +
+          "&apellido= " +
+          "&nombres= " +
+          "&docnro= " +
+          "&email= " +
+          "&fechasalida= " +
+          "&domicilio= " +
+          "&telefono= "
       )
       .then((response) => {
-        console.log(response);
-        setUsers(response.data);
+        console.log(response.data);
       });
-  }, []);
-
-  function nextPath(path) {
-    this.props.history.push(path);
+    dispatch(borrarDocente(id));
   }
 
   return (
-    <div className="tablaDocenteContainer scroll">
-      <table className="table align-middle justify-content-center w-50 mx-auto table-striped table-hover table-condensed">
+    <div
+      style={{ height: "900px" }}
+      className="overflow-scroll table-responsive"
+    >
+      <table className="w-100 table-striped table-hover table-condensed">
         <thead className="bg-transparent">
           <tr>
-            <th className="col">Apellido</th>
-            <th className="col">Nombre</th>
+            <th className="col-6">Apellido</th>
+            <th className="col-4">Nombre</th>
             <th className="col">Documento</th>
             <th className="col">Email</th>
-            <th className="col">Accion</th>
+            <th className="col">Editar</th>
+            <th className="col">Eliminar</th>
           </tr>
         </thead>
         <tbody>
-          {users &&
-            users.map((u) => (
+          {docentes &&
+            docentes.map((u) => (
               <tr key={u[4]}>
                 <td>
-                  <div className="d-flex align-items-center">
-                    <p className="fw-bold mb-1">{u[0]}</p>
+                  <div className="ml-3">
+                    <p
+                      style={{ fontSize: "13px" }}
+                      aclassName="fw-bold mb-1 text-nowrap "
+                    >
+                      {u[0].toUpperCase()}
+                    </p>
                   </div>
                 </td>
                 <td>
-                  <div className="d-flex align-items-start tabla1">
-                    <p className="">{u[1]}</p>
+                  <div className=" ml-3">
+                    <p
+                      style={{ fontSize: "13px" }}
+                      aclassName="fw-bold mb-1 text-nowrap "
+                    >
+                      {u[1].toUpperCase()}
+                    </p>
                   </div>
                 </td>
                 <td>
-                  <div className="d-flex align-items-center">
-                    <p className="fw-bold mb-1">{u[2]}</p>
+                  <div className=" ml-3">
+                    <p
+                      style={{ fontSize: "13px" }}
+                      aclassName="fw-bold mb-1 text-nowrap "
+                    >
+                      {u[2].toUpperCase()}
+                    </p>
                   </div>
                 </td>
                 <td>
-                  <div className="d-flex align-items-center tabla11">
-                    <p className="fw-bold mb-1">{u[3]}</p>
+                  <div className=" ml-3">
+                    <p
+                      style={{ fontSize: "13px" }}
+                      aclassName="fw-bold mb-1 text-nowrap "
+                    >
+                      {u[3]}
+                    </p>
                   </div>
                 </td>
-                <td>
+                <td className="">
                   <NavLink
                     to={"/docente/" + u[4]}
                     type="button"
-                    className="btn btn-link btn-sm btn-rounded"
+                    className="ml-3 btn"
                     id={u[4]}
                     edit="true"
-                    onClick={() =>
-                      document
-                        .querySelector(".navbar")
-                        .classList.toggle("active-nav")
-                    }
                   >
-                    <img
-                      width="20px"
-                      alt="edit"
-                      src="https://cdn-icons-png.flaticon.com/512/1160/1160515.png"
-                    />
+                    <img width="20px" alt="edit" src={edit} />
                   </NavLink>
+                </td>
+                <td className="d-flex justify-content-center">
+                  <button
+                    className="btn mt-2 mt-lg-0"
+                    onClick={(e) => {
+                      Swal.fire({
+                        title:
+                          "Está seguro que desea eliminar el docente " +
+                          u[0] +
+                          " " +
+                          u[1] +
+                          "?",
+                        icon: "question",
+                        html: "Si se confirma se dejará de visualizar en todas las opciones que se encuentre vinculado.",
+                        showCloseButton: true,
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          eliminarDocente(u[4]);
+                          Swal.fire("Eliminado!", "", "success");
+                        }
+                      });
+                    }}
+                  >
+                    <img width="20px" alt="edit" src={trash} />
+                  </button>
                 </td>
               </tr>
             ))}
