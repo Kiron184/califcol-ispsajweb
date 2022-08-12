@@ -71,7 +71,7 @@
 }
 
 
-@media (max-width: 1366px) {
+@media (max-width: 1365px) {
     .navbar {
         background-color: transparent;
         z-index: 10;
