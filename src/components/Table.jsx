@@ -24,7 +24,6 @@ export default function Table({ name, filter }) {
             filter
         )
         .then((response) => {
-          console.log(response.data);
           return dispatch(cargarDocentes(response.data));
         });
     }
@@ -32,7 +31,7 @@ export default function Table({ name, filter }) {
 
   useEffect(() => {
     cargarTabla();
-  }, [name, filter]);
+  }, [filter, name]);
 
   async function eliminarDocente(id) {
     await axios
@@ -54,6 +53,8 @@ export default function Table({ name, filter }) {
       });
     dispatch(borrarDocente(id));
   }
+
+  console.log(filter);
 
   return (
     <div
@@ -79,7 +80,7 @@ export default function Table({ name, filter }) {
                   <div className="ml-3">
                     <p
                       style={{ fontSize: "13px" }}
-                      aclassName="fw-bold mb-1 text-nowrap "
+                      className="fw-bold mb-1 text-nowrap "
                     >
                       {u[0].toUpperCase()}
                     </p>
@@ -89,7 +90,7 @@ export default function Table({ name, filter }) {
                   <div className=" ml-3">
                     <p
                       style={{ fontSize: "13px" }}
-                      aclassName="fw-bold mb-1 text-nowrap "
+                      className="fw-bold mb-1 text-nowrap "
                     >
                       {u[1].toUpperCase()}
                     </p>
@@ -99,7 +100,7 @@ export default function Table({ name, filter }) {
                   <div className=" ml-3">
                     <p
                       style={{ fontSize: "13px" }}
-                      aclassName="fw-bold mb-1 text-nowrap "
+                      className="fw-bold mb-1 text-nowrap "
                     >
                       {u[2].toUpperCase()}
                     </p>
@@ -109,7 +110,7 @@ export default function Table({ name, filter }) {
                   <div className=" ml-3">
                     <p
                       style={{ fontSize: "13px" }}
-                      aclassName="fw-bold mb-1 text-nowrap "
+                      className="fw-bold mb-1 text-nowrap "
                     >
                       {u[3]}
                     </p>
@@ -122,6 +123,11 @@ export default function Table({ name, filter }) {
                     className="ml-3 btn"
                     id={u[4]}
                     edit="true"
+                    onClick={(e) => {
+                      document
+                        .querySelector(".navbar")
+                        .classList.remove("active-nav");
+                    }}
                   >
                     <img width="20px" alt="edit" src={edit} />
                   </NavLink>

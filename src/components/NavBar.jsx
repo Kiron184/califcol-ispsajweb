@@ -7,6 +7,10 @@ import "../style/styles.css";
 import { NavLink } from "react-router-dom";
 
 export default function NavBar() {
+  if (window.location.href !== "/" && document.querySelector(".navbar")) {
+    document.querySelector(".navbar").classList.remove("active-nav");
+  }
+
   function handleClick(e) {
     e.preventDefault();
     document.querySelector(".navbar").classList.toggle("active-nav");

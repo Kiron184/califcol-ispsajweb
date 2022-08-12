@@ -90,11 +90,8 @@ export default function Docente() {
               html: `${response.data}`,
               showCloseButton: true,
             }).then((result) => {
-              /* Read more about isConfirmed, isDenied below */
               if (result.isConfirmed) {
                 navigation("/home");
-
-                //cargar users con los docentes actualizados
               }
             });
           }
@@ -136,11 +133,12 @@ export default function Docente() {
       dispatch(modificarDocente(input2));
       navigation("/home");
     }
+    document.querySelector(".navbar").classList.remove("active-nav");
   }
 
   return (
     <React.Fragment>
-      <div className="pr-5 container pt-3">
+      <div className="pr-5 pt-3 pl-3 pl-lg-5 ml-lg-5 home">
         <div className="pt-5">
           <div>
             <h4 className="">DOCENTES</h4>
@@ -164,6 +162,9 @@ export default function Docente() {
                 id="id_cancelar"
                 onClick={() => {
                   navigation("/home");
+                  document
+                    .querySelector(".navbar")
+                    .classList.remove("active-nav");
                 }}
               >
                 {" "}
@@ -396,6 +397,9 @@ export default function Docente() {
                     id="id_cancelar"
                     onClick={() => {
                       navigation("/home");
+                      document
+                        .querySelector(".navbar")
+                        .classList.remove("active-nav");
                     }}
                   >
                     Descartar Cambios

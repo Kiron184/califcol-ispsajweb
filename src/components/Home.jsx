@@ -7,6 +7,8 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState(0);
 
+  console.log(filter);
+
   return (
     <div className="px-3 pt-2 pb-5 px-lg-5 mx-lg-5 pb-lg-0 home">
       <div className="pt-5">
@@ -22,7 +24,9 @@ export default function Home() {
           <div className="d-flex flex-md-row flex-column">
             <select
               className="form-control w-md-25"
-              onClick={(e) => setFilter(e.target.value)}
+              onChange={(e) => {
+                return setFilter(e.target.value);
+              }}
             >
               <option value="0">Filtrar por</option>
               <option value="1">Activos</option>
