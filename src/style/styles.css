@@ -3,12 +3,8 @@
     height: 100vh;
     margin-left: -200px;
     position: fixed;
-    transition: 0.5s;
+    transition: 0.3s;
     background-color: rgb(189, 189, 189);
-}
-
-.home{
-    transition: 0.5s;
 }
 
 .nav-link{
@@ -46,10 +42,6 @@
     margin-left: 0;
 }
 
-.active-home{
-    margin-left: 260px !important;
-}
-
 .btn-nav{
     margin: 15px 0px 0px 110px;
 }
@@ -70,8 +62,15 @@
     height: 360px !important;
 }
 
+.contenedor{
+    transition: 0.3s;
+}
 
-@media (max-width: 1365px) {
+.active-contenedor{
+    margin-left: 200px !important;
+}
+
+@media (max-width: 1023px) {
     .navbar {
         background-color: transparent;
         z-index: 10;
@@ -81,7 +80,7 @@
         background-color: rgb(189, 189, 189);
     }
 
-    .active-home{
+    .active-contenedor{
         margin-left: 0px !important;
     }
 

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import Table from "./Table";
+import TableMateria from "./TableMateria";
 import "../style/styles.css";
 
-export default function Home() {
+export default function AbmMaterias() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState(0);
 
@@ -11,11 +11,8 @@ export default function Home() {
     <div className="px-3 pt-2 pb-5 px-lg-5 mx-lg-5 pb-lg-0">
       <div className="pt-5">
         <div>
-          <h4 className="">DOCENTES</h4>
-          <p className="text-secondary">
-            Crear y gestionar los datos de los docentes que van a acceder a la
-            plataforma
-          </p>
+          <h4 className="">MATERIAS</h4>
+          <p className="text-secondary">Crear y gestionar materias</p>
         </div>
         <hr className="w-100 mx-0" />
         <div className="col col-lg-6">
@@ -57,7 +54,7 @@ export default function Home() {
         </div>
       </div>
       <hr className="w-100 mx-0" />
-      <Table name={search} filter={filter} />
+      <TableMateria name={search} filter={filter} />
     </div>
   );
 }

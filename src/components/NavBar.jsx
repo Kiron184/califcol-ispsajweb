@@ -14,8 +14,10 @@ export default function NavBar() {
   function handleClick(e) {
     e.preventDefault();
     document.querySelector(".navbar").classList.toggle("active-nav");
-    if (document.querySelector(".home")) {
-      document.querySelector(".home").classList.toggle("active-home");
+    if (document.querySelector(".contenedor")) {
+      document
+        .querySelector(".contenedor")
+        .classList.toggle("active-contenedor");
     }
   }
 
@@ -60,10 +62,10 @@ export default function NavBar() {
                   Docentes
                 </NavLink>
               </li>
-              <li style={{ listStyle: "none" }}>
-                <a href="-" className="collapse-item">
+              <li style={{ listStyle: "none" }} onClick={(e) => handleClick(e)}>
+                <NavLink to="/materias" className="collapse-item">
                   Materias
-                </a>
+                </NavLink>
               </li>
             </ul>
           </li>

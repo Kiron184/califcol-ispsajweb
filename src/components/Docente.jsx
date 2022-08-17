@@ -134,11 +134,12 @@ export default function Docente() {
       navigation("/home");
     }
     document.querySelector(".navbar").classList.remove("active-nav");
+    document.querySelector(".contenedor").classList.remove("active-contenedor");
   }
 
   return (
     <React.Fragment>
-      <div className="pr-5 pt-3 pl-3 pl-lg-5 ml-lg-5 home">
+      <div className="pr-5 pt-3 pl-3 pl-lg-5 ml-lg-5 contenedor">
         <div className="pt-5">
           <div>
             <h4 className="">DOCENTES</h4>
@@ -152,7 +153,7 @@ export default function Docente() {
             <h4>
               Informacion del Docente {"  "}
               <strong className="ml-3 text-secondary font-weight-normal">
-                {user[1] ? user[1] : ""}
+                {input.apellido + " " + input.nombres}
               </strong>
             </h4>
             <div>
@@ -165,6 +166,9 @@ export default function Docente() {
                   document
                     .querySelector(".navbar")
                     .classList.remove("active-nav");
+                  document
+                    .querySelector(".contenedor")
+                    .classList.remove("active-contenedor");
                 }}
               >
                 {" "}
@@ -281,6 +285,10 @@ export default function Docente() {
                     <input
                       required
                       type="text"
+                      pattern="[0-9]+"
+                      min="1"
+                      step="1"
+                      onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                       className="form-control"
                       id="docnro"
                       name={"docnro"}
@@ -400,6 +408,9 @@ export default function Docente() {
                       document
                         .querySelector(".navbar")
                         .classList.remove("active-nav");
+                      document
+                        .querySelector(".contenedor")
+                        .classList.remove("active-contenedor");
                     }}
                   >
                     Descartar Cambios

@@ -6,25 +6,27 @@ import trash from "../utils/delete.png";
 import edit from "../utils/edit.png";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
-import { cargarDocentes, borrarDocente } from "../actions";
-import { useSelector } from "react-redux/es/exports";
+//import { cargarDocentes, borrarDocente } from "../actions";
+//import { useSelector } from "react-redux/es/exports";
+import { useState } from "react";
 
-export default function Table({ name, filter }) {
+export default function TableMateria({ name, filter }) {
   const dispatch = useDispatch();
   const navigation = useNavigate();
-  const docentes = useSelector((state) => state.users);
+  //const docentes = useSelector((state) => state.users);
+
+  const [materias, setMaterias] = useState("");
 
   function cargarTabla() {
     if (name.length > 3 || !name) {
       axios
         .get(
-          "https://www.califcolegios.wnpower.host/app/traerdocentes.php?txnombre=" +
-            name +
-            "&filtro=" +
-            filter
+          "https://www.califcolegios.wnpower.host/app/traermaterias.php?nombre=" +
+            name
         )
         .then((response) => {
-          return dispatch(cargarDocentes(response.data));
+          console.log(response.data);
+          return setMaterias(response.data); //dispatch(cargarDocentes(response.data));
         });
     }
   }
@@ -51,7 +53,7 @@ export default function Table({ name, filter }) {
       .then((response) => {
         console.log(response.data);
       });
-    dispatch(borrarDocente(id));
+    //dispatch(borrarDocente(id));
   }
 
   return (
@@ -62,20 +64,20 @@ export default function Table({ name, filter }) {
       <table className="w-100 table-striped table-hover table-condensed">
         <thead className="bg-transparent">
           <tr>
-            <th className="col-6">Apellido</th>
-            <th className="col-4">Nombre</th>
-            <th className="col">Documento</th>
-            <th className="col">Email</th>
+            <th className="col-2">Código</th>
+            <th className="col">Nombre</th>
+            <th className="col-2">Año</th>
+            <th className="col">Tipo</th>
             <th className="col">Editar</th>
             <th className="col">Eliminar</th>
           </tr>
         </thead>
         <tbody>
-          {docentes &&
-            docentes.map((u) => (
+          {materias &&
+            materias.map((m) => (
               <tr
                 style={{ cursor: "pointer" }}
-                key={u[4]}
+                key={m[4]}
                 onClick={(e) => {
                   document
                     .querySelector(".navbar")
@@ -83,7 +85,7 @@ export default function Table({ name, filter }) {
                   document
                     .querySelector(".contenedor")
                     .classList.remove("active-contenedor");
-                  navigation(`/docente/${u[4]}`);
+                  navigation(`/materias/${m[4]}`);
                 }}
               >
                 <td>
@@ -92,7 +94,7 @@ export default function Table({ name, filter }) {
                       style={{ fontSize: "13px" }}
                       className="fw-bold mb-1 text-nowrap "
                     >
-                      {u[0].toUpperCase()}
+                      {m[0].toUpperCase()}
                     </p>
                   </div>
                 </td>
@@ -102,7 +104,7 @@ export default function Table({ name, filter }) {
                       style={{ fontSize: "13px" }}
                       className="fw-bold mb-1 text-nowrap "
                     >
-                      {u[1].toUpperCase()}
+                      {m[1].toUpperCase()}
                     </p>
                   </div>
                 </td>
@@ -112,7 +114,7 @@ export default function Table({ name, filter }) {
                       style={{ fontSize: "13px" }}
                       className="fw-bold mb-1 text-nowrap "
                     >
-                      {u[2].toUpperCase()}
+                      {m[2].toUpperCase()}
                     </p>
                   </div>
                 </td>
@@ -122,16 +124,16 @@ export default function Table({ name, filter }) {
                       style={{ fontSize: "13px" }}
                       className="fw-bold mb-1 text-nowrap "
                     >
-                      {u[3]}
+                      {m[3]}
                     </p>
                   </div>
                 </td>
                 <td className="">
                   <NavLink
-                    to={"/docente/" + u[4]}
+                    to={"/docente/" + m[4]}
                     type="button"
                     className="ml-3 btn"
-                    id={u[4]}
+                    id={m[4]}
                     edit="true"
                     onClick={(e) => {
                       document
@@ -152,16 +154,16 @@ export default function Table({ name, filter }) {
                       Swal.fire({
                         title:
                           "Está seguro que desea eliminar el docente " +
-                          u[0] +
+                          m[0] +
                           " " +
-                          u[1] +
+                          m[1] +
                           "?",
                         icon: "question",
                         html: "Si se confirma se dejará de visualizar en todas las opciones que se encuentre vinculado.",
                         showCloseButton: true,
                       }).then((result) => {
                         if (result.isConfirmed) {
-                          eliminarDocente(u[4]);
+                          eliminarDocente(m[4]);
                           Swal.fire("Eliminado!", "", "success");
                         }
                       });
