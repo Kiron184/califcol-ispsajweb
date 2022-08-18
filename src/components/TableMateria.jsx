@@ -6,16 +6,13 @@ import trash from "../utils/delete.png";
 import edit from "../utils/edit.png";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
-//import { cargarDocentes, borrarDocente } from "../actions";
-//import { useSelector } from "react-redux/es/exports";
-import { useState } from "react";
+import { cargarMaterias, borrarMateria } from "../actions";
+import { useSelector } from "react-redux/es/exports";
 
 export default function TableMateria({ name, filter }) {
-  const dispatch = useDispatch();
   const navigation = useNavigate();
-  //const docentes = useSelector((state) => state.users);
-
-  const [materias, setMaterias] = useState("");
+  const dispatch = useDispatch();
+  const materias = useSelector((state) => state.materias);
 
   function cargarTabla() {
     if (name.length > 3 || !name) {
@@ -25,8 +22,7 @@ export default function TableMateria({ name, filter }) {
             name
         )
         .then((response) => {
-          console.log(response.data);
-          return setMaterias(response.data); //dispatch(cargarDocentes(response.data));
+          return dispatch(cargarMaterias(response.data));
         });
     }
   }
@@ -35,25 +31,24 @@ export default function TableMateria({ name, filter }) {
     cargarTabla();
   }, [filter, name]);
 
-  async function eliminarDocente(id) {
+  async function eliminarMateria(id) {
     await axios
       .post(
-        "https://www.califcolegios.wnpower.host/app/grabardatosdocentes.php?oper=" +
+        "https://www.califcolegios.wnpower.host/app/grabardatosmaterias.php?oper=" +
           "B" +
-          "&iddocente=" +
+          "&idmateria=" +
           id +
-          "&apellido= " +
-          "&nombres= " +
-          "&docnro= " +
-          "&email= " +
-          "&fechasalida= " +
-          "&domicilio= " +
-          "&telefono= "
+          "&nombre= " +
+          "&abrev= " +
+          "&anio=0" +
+          "&tipo=0" +
+          "&tiponota=0" +
+          "&agrup=0"
       )
       .then((response) => {
         console.log(response.data);
       });
-    //dispatch(borrarDocente(id));
+    dispatch(borrarMateria(id));
   }
 
   return (
@@ -77,7 +72,7 @@ export default function TableMateria({ name, filter }) {
             materias.map((m) => (
               <tr
                 style={{ cursor: "pointer" }}
-                key={m[4]}
+                key={m[0]}
                 onClick={(e) => {
                   document
                     .querySelector(".navbar")
@@ -85,7 +80,7 @@ export default function TableMateria({ name, filter }) {
                   document
                     .querySelector(".contenedor")
                     .classList.remove("active-contenedor");
-                  navigation(`/materias/${m[4]}`);
+                  navigation(`/materiasvinculadas/${m[0]}`);
                 }}
               >
                 <td>
@@ -130,7 +125,7 @@ export default function TableMateria({ name, filter }) {
                 </td>
                 <td className="">
                   <NavLink
-                    to={"/docente/" + m[4]}
+                    to={"/materia/" + m[0]}
                     type="button"
                     className="ml-3 btn"
                     id={m[4]}
@@ -153,9 +148,7 @@ export default function TableMateria({ name, filter }) {
                     onClick={(e) => {
                       Swal.fire({
                         title:
-                          "Está seguro que desea eliminar el docente " +
-                          m[0] +
-                          " " +
+                          "Está seguro que desea eliminar la materia " +
                           m[1] +
                           "?",
                         icon: "question",
@@ -163,9 +156,10 @@ export default function TableMateria({ name, filter }) {
                         showCloseButton: true,
                       }).then((result) => {
                         if (result.isConfirmed) {
-                          eliminarDocente(m[4]);
+                          eliminarMateria(m[0]);
                           Swal.fire("Eliminado!", "", "success");
                         }
+                        navigation("/materias");
                       });
                     }}
                   >

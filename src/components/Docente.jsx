@@ -53,6 +53,7 @@ export default function Docente() {
 
   function handleChange(e) {
     e.preventDefault();
+    documentFormat();
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
@@ -81,7 +82,6 @@ export default function Docente() {
             input.telefono
         )
         .then((response) => {
-          //cargarUsers();
           console.log(response.data);
           if (response.data === "No se puede completar la operación") {
             Swal.fire({
@@ -135,6 +135,16 @@ export default function Docente() {
     }
     document.querySelector(".navbar").classList.remove("active-nav");
     document.querySelector(".contenedor").classList.remove("active-contenedor");
+  }
+
+  function documentFormat(e) {
+    var inputBox = document.getElementById("inputBox");
+    inputBox.addEventListener("keydown", function (e) {
+      var invalidChars = ["-", "+", "e", "."];
+      if (invalidChars.includes(e.key)) {
+        e.preventDefault();
+      }
+    });
   }
 
   return (
@@ -284,13 +294,9 @@ export default function Docente() {
                   <div className="col-sm-3">
                     <input
                       required
-                      type="text"
-                      pattern="[0-9]+"
-                      min="1"
-                      step="1"
-                      onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                      type="number"
                       className="form-control"
-                      id="docnro"
+                      id="inputBox"
                       name={"docnro"}
                       value={input.docnro}
                       onChange={(e) => handleChange(e)}

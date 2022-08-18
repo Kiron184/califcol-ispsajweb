@@ -164,6 +164,7 @@ export default function Table({ name, filter }) {
                           eliminarDocente(u[4]);
                           Swal.fire("Eliminado!", "", "success");
                         }
+                        navigation("/home");
                       });
                     }}
                   >

@@ -40,9 +40,44 @@ export function buscarDocente(id) {
   };
 }
 
-export function cargarMateriasVinculadas(materias) {
+export function cargarMateriasVinculadas(materiasv) {
   return {
     type: "CARGAR_MATERIASVINCULADAS",
+    payload: materiasv,
+  };
+}
+
+export function cargarMaterias(materias) {
+  return {
+    type: "CARGAR_MATERIAS",
     payload: materias,
+  };
+}
+
+export function borrarMateria(id) {
+  return {
+    type: "BORRAR_MATERIA",
+    payload: id,
+  };
+}
+
+export function cargarMateria(id) {
+  return {
+    type: "CARGAR_MATERIA",
+    payload: id,
+  };
+}
+
+export function modificarMateria(materia) {
+  return {
+    type: "MODIFICAR_MATERIA",
+    payload: materia,
+  };
+}
+
+export function cargarDocentesVinculados(docentesv) {
+  return {
+    type: "CARGAR_DOCENTESVINCULADOS",
+    payload: docentesv,
   };
 }

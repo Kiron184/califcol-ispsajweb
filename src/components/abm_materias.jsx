@@ -38,7 +38,7 @@ export default function AbmMaterias() {
 
             <NavLink
               className="align-self-start btn btn-primary rounded"
-              to="/docente/0"
+              to="/materiasvinculadas/0"
               onClick={(e) => {
                 document
                   .querySelector(".navbar")
