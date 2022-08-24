@@ -57,15 +57,50 @@ export default function NavBar() {
                   Alumnos
                 </a>
               </li>
-              <li style={{ listStyle: "none" }} onClick={(e) => handleClick(e)}>
-                <NavLink to="/home" className="collapse-item">
-                  Docentes
-                </NavLink>
+              <li style={{ listStyle: "none" }}>
+                <a href="-" className="collapse-item">
+                  Cursos
+                </a>
+              </li>
+              <li style={{ listStyle: "none" }}>
+                <a href="-" className="collapse-item">
+                  Codificadores
+                </a>
               </li>
               <li style={{ listStyle: "none" }} onClick={(e) => handleClick(e)}>
-                <NavLink to="/materias" className="collapse-item">
-                  Materias
+                <NavLink to="/conceptosgenerales" className="collapse-item">
+                  Conceptos Generales
                 </NavLink>
+              </li>
+              <li style={{ listStyle: "none" }}>
+                <a href="-" className="collapse-item">
+                  Aranceles
+                </a>
+              </li>
+              <li style={{ listStyle: "none" }} onClick={(e) => handleClick(e)}>
+                <NavLink to="/becas" className="collapse-item">
+                  Becas
+                </NavLink>
+              </li>
+              <li style={{ listStyle: "none" }}>
+                <a href="-" className="collapse-item">
+                  Inscripción Alumnos
+                </a>
+              </li>
+              <li style={{ listStyle: "none" }}>
+                <a href="-" className="collapse-item">
+                  Usuarios
+                </a>
+              </li>
+              <li style={{ listStyle: "none" }}>
+                <a href="-" className="collapse-item">
+                  Parámetros
+                </a>
+              </li>
+              <li style={{ listStyle: "none" }}>
+                <a href="-" className="collapse-item">
+                  Seguimiento
+                </a>
               </li>
             </ul>
           </li>
@@ -77,22 +112,22 @@ export default function NavBar() {
               aria-expanded="false"
               class="dropdown-toggle nav-link"
             >
-              Calificaciones
+              Acciones
             </a>
             <ul class="collapse collapse-menu" id="calificaciones">
               <li style={{ listStyle: "none" }}>
                 <a href="-" className="collapse-item">
-                  Ingresar
+                  Asignación de Becas
                 </a>
               </li>
               <li style={{ listStyle: "none" }}>
                 <a href="-" className="collapse-item">
-                  Mesas de Examen
+                  Asignación de Convenios
                 </a>
               </li>
               <li style={{ listStyle: "none" }}>
                 <a href="-" className="collapse-item">
-                  Boletines
+                  Liquidación por Curso
                 </a>
               </li>
             </ul>
@@ -105,17 +140,12 @@ export default function NavBar() {
               aria-expanded="false"
               class="dropdown-toggle nav-link"
             >
-              Inasistencias
+              Caja
             </a>
             <ul class="collapse collapse-menu" id="inasistencias">
               <li style={{ listStyle: "none" }}>
                 <a href="-" className="collapse-item">
-                  Ingresar
-                </a>
-              </li>
-              <li style={{ listStyle: "none" }}>
-                <a href="-" className="collapse-item">
-                  Reincorporaciones
+                  Movimientos
                 </a>
               </li>
             </ul>

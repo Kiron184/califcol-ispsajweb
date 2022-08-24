@@ -1,26 +1,22 @@
 import React from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import AbmDocente from "./components/Docente";
-import Home from "./components/Home";
+import ConceptosGenerales from "./components/ConceptosGenerales";
 import NavBar from "./components/NavBar";
 import Container from "./components/Container";
-import AbmMaterias from "./components/abm_materias";
-import MateriasVinculadas from "./components/MateriasVinculadas";
-
+import Concepto from "./components/Concepto";
+import Becas from "./components/becas/Becas";
+import Beca from "./components/becas/Beca";
 function App() {
   return (
     <React.Fragment>
       <NavBar />
       <Container>
         <Routes>
-          <Route path="/home" element={<Home />} />
-          <Route path="/docente/:id" element={<AbmDocente />} />
-          <Route path="/materias" element={<AbmMaterias />} />
-          <Route
-            path="/materiasvinculadas/:id"
-            element={<MateriasVinculadas />}
-          />
+          <Route path="/conceptosgenerales" element={<ConceptosGenerales />} />
+          <Route path="/conceptosgenerales/:id" element={<Concepto />} />
+          <Route path="/becas" element={<Becas />} />
+          <Route path="/becas/:id" element={<Beca />} />
         </Routes>
       </Container>
     </React.Fragment>
