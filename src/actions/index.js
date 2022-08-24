@@ -1,83 +1,48 @@
-export function cargarDocentes(users) {
+export function cargarConceptosGenerales(conceptos) {
   return {
-    type: "CARGAR_DOCENTES",
-    payload: users,
+    type: "CARGAR_CONCEPTOS_GENERALES",
+    payload: conceptos,
   };
 }
 
-export function cargarDocentes2(users) {
+export function borrarConcepto(id) {
   return {
-    type: "CARGAR_DOCENTES2",
-    payload: users,
-  };
-}
-
-export function cargarDocente(id) {
-  return {
-    type: "CARGAR_DOCENTE",
+    type: "BORRAR_CONCEPTO_GENERAL",
     payload: id,
   };
 }
 
-export function borrarDocente(id) {
+export function cargarConcepto(concepto) {
   return {
-    type: "BORRAR_DOCENTE",
+    type: "CARGAR_CONCEPTO",
+    payload: concepto,
+  };
+}
+
+export function cargarBecas(becas) {
+  return {
+    type: "CARGAR_BECAS",
+    payload: becas,
+  };
+}
+
+export function borrarBeca(id) {
+  return {
+    type: "BORRAR_BECA",
     payload: id,
   };
 }
 
-export function modificarDocente(user) {
+export function cargarBeca(beca) {
   return {
-    type: "MODIFICAR_DOCENTE",
-    payload: user,
+    type: "CARGAR_BECA",
+    payload: beca,
   };
 }
 
-export function buscarDocente(id) {
+export function cargarConceptosVinculados(conceptosv) {
   return {
-    type: "BUSCAR_DOCENTE",
-    payload: id,
-  };
-}
-
-export function cargarMateriasVinculadas(materiasv) {
-  return {
-    type: "CARGAR_MATERIASVINCULADAS",
-    payload: materiasv,
-  };
-}
-
-export function cargarMaterias(materias) {
-  return {
-    type: "CARGAR_MATERIAS",
-    payload: materias,
-  };
-}
-
-export function borrarMateria(id) {
-  return {
-    type: "BORRAR_MATERIA",
-    payload: id,
-  };
-}
-
-export function cargarMateria(id) {
-  return {
-    type: "CARGAR_MATERIA",
-    payload: id,
-  };
-}
-
-export function modificarMateria(materia) {
-  return {
-    type: "MODIFICAR_MATERIA",
-    payload: materia,
-  };
-}
-
-export function cargarDocentesVinculados(docentesv) {
-  return {
-    type: "CARGAR_DOCENTESVINCULADOS",
-    payload: docentesv,
+    type: "CARGAR_CONCEPTOS_VINCULADOS",
+    payload: conceptosv,
   };
 }

@@ -1,89 +1,51 @@
 // let orden = 1;
 const initialState = {
-  users: [],
-  users2: [],
-  user: "",
-  materiasVinculadas: [],
-  materias: [],
-  materias2: [],
-  materia: "",
-  docentesVinculados: [],
+  conceptosGenerales: [],
+  concepto: [],
+  becas: [],
+  beca: [],
+  conceptosVinculados: [],
 };
 
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
-    case "CARGAR_DOCENTES":
+    case "CARGAR_CONCEPTOS_GENERALES":
       return {
         ...state,
-        users: action.payload,
+        conceptosGenerales: action.payload,
       };
-    case "CARGAR_DOCENTES2":
+    case "BORRAR_CONCEPTO_GENERAL":
       return {
         ...state,
-        users2: action.payload,
-      };
-    case "CARGAR_DOCENTE":
-      return {
-        ...state,
-        user: state.users.filter((u) => u[4] === action.payload),
-      };
-
-    case "BORRAR_DOCENTE":
-      return {
-        ...state,
-        users: state.users.filter((u) => u[4] !== action.payload),
-      };
-
-    case "MODIFICAR_DOCENTE":
-      const docente = action.payload;
-      return {
-        ...state,
-        users: state.users.map((u) => (u[4] === docente[4] ? docente : u)),
-        users2: state.users.map((u) => (u[4] === docente[4] ? docente : u)),
-      };
-
-    case "BUSCAR_DOCENTE":
-      return {
-        ...state,
-        user: state.users.filter((u) => u[4] === action.payload),
-      };
-
-    case "CARGAR_MATERIASVINCULADAS":
-      return {
-        ...state,
-        materiasVinculadas: action.payload,
-      };
-
-    case "CARGAR_MATERIAS":
-      return {
-        ...state,
-        materias: action.payload,
-      };
-    case "BORRAR_MATERIA":
-      return {
-        ...state,
-        materias: state.materias.filter((m) => m[0] !== action.payload),
-      };
-
-    case "CARGAR_MATERIA":
-      return {
-        ...state,
-        materia: state.materias.filter((m) => m[0] === action.payload),
-      };
-
-    case "MODIFICAR_MATERIA":
-      const materia = action.payload;
-      return {
-        ...state,
-        materias: state.materias.map((m) =>
-          m[0] === materia[0] ? materia : m
+        conceptosGenerales: state.conceptosGenerales.filter(
+          (u) => u[2] !== action.payload
         ),
       };
-
-    case "CARGAR_DOCENTESVINCULADOS":
+    case "CARGAR_CONCEPTO":
       return {
         ...state,
-        docentesVinculados: action.payload,
+        concepto: action.payload,
+      };
+
+    case "CARGAR_BECAS":
+      return {
+        ...state,
+        becas: action.payload,
+      };
+    case "BORRAR_BECA":
+      return {
+        ...state,
+        becas: state.becas.filter((u) => u[2] !== action.payload),
+      };
+    case "CARGAR_BECA":
+      return {
+        ...state,
+        beca: action.payload,
+      };
+    case "CARGAR_CONCEPTOS_VINCULADOS":
+      return {
+        ...state,
+        conceptosVinculados: action.payload,
       };
     default:
       return { ...state };
