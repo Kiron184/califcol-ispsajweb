@@ -42,7 +42,7 @@ export default function NavBar() {
         </div>
 
         <ul className="navbar-nav d-flex flex-column mt-5 w-100">
-          <li>
+          <li className="collapse-list-item">
             <a
               href="#adminDatos"
               data-toggle="collapse"
@@ -67,7 +67,15 @@ export default function NavBar() {
                   Codificadores
                 </a>
               </li>
-              <li style={{ listStyle: "none" }} onClick={(e) => handleClick(e)}>
+              <li
+                style={{ listStyle: "none" }}
+                onClick={(e) => {
+                  document
+                    .getElementById("adminDatos")
+                    .classList.remove("show");
+                  handleClick(e);
+                }}
+              >
                 <NavLink to="/conceptosgenerales" className="collapse-item">
                   Conceptos Generales
                 </NavLink>
@@ -77,7 +85,15 @@ export default function NavBar() {
                   Aranceles
                 </a>
               </li>
-              <li style={{ listStyle: "none" }} onClick={(e) => handleClick(e)}>
+              <li
+                style={{ listStyle: "none" }}
+                onClick={(e) => {
+                  document
+                    .getElementById("adminDatos")
+                    .classList.remove("show");
+                  handleClick(e);
+                }}
+              >
                 <NavLink to="/becas" className="collapse-item">
                   Becas
                 </NavLink>
@@ -105,7 +121,7 @@ export default function NavBar() {
             </ul>
           </li>
 
-          <li>
+          <li className="collapse-list-item">
             <a
               href="#calificaciones"
               data-toggle="collapse"
@@ -130,10 +146,39 @@ export default function NavBar() {
                   Liquidación por Curso
                 </a>
               </li>
+              <li
+                style={{ listStyle: "none" }}
+                onClick={(e) => {
+                  document
+                    .getElementById("calificaciones")
+                    .classList.remove("show");
+
+                  handleClick(e);
+                }}
+              >
+                <NavLink to="/liquidacionindividual" className="collapse-item">
+                  Liquidación Individual
+                </NavLink>
+              </li>
+              <li style={{ listStyle: "none" }}>
+                <a href="-" className="collapse-item">
+                  Cobranzas
+                </a>
+              </li>
+              <li style={{ listStyle: "none" }}>
+                <a href="-" className="collapse-item">
+                  Asignación de Convenios
+                </a>
+              </li>
+              <li style={{ listStyle: "none" }}>
+                <a href="-" className="collapse-item">
+                  Procesar Archivo Cobranzas
+                </a>
+              </li>
             </ul>
           </li>
 
-          <li>
+          <li className="collapse-list-item">
             <a
               href="#inasistencias"
               data-toggle="collapse"

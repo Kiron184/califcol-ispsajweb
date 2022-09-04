@@ -46,3 +46,10 @@ export function cargarConceptosVinculados(conceptosv) {
     payload: conceptosv,
   };
 }
+
+export function cargarTablaLiquidaciones(liquidaciones) {
+  return {
+    type: "CARGAR_LIQUIDACIONES",
+    payload: liquidaciones,
+  };
+}

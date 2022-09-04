@@ -1,12 +1,14 @@
 import React from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import ConceptosGenerales from "./components/ConceptosGenerales";
+import ConceptosGenerales from "./components/Conceptos/ConceptosGenerales";
 import NavBar from "./components/NavBar";
 import Container from "./components/Container";
-import Concepto from "./components/Concepto";
-import Becas from "./components/becas/Becas";
-import Beca from "./components/becas/Beca";
+import Concepto from "./components/Conceptos/Concepto";
+import Becas from "./components/Becas/Becas";
+import Beca from "./components/Becas/Beca";
+import LiquidacionIndividual from "./components/Liquidacion_Individual/LiquidacionIndividual";
+
 function App() {
   return (
     <React.Fragment>
@@ -17,6 +19,7 @@ function App() {
           <Route path="/conceptosgenerales/:id" element={<Concepto />} />
           <Route path="/becas" element={<Becas />} />
           <Route path="/becas/:id" element={<Beca />} />
+          <Route path="/liquidacionindividual" element={<LiquidacionIndividual />} />
         </Routes>
       </Container>
     </React.Fragment>
