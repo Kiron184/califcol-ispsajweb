@@ -46,13 +46,16 @@ export default function TablaLiquidacion({
 
   const Styles = styled.div`
     .tr:nth-child(even) {
+      background-color: #f7f7f7;
+    }
+    .tr:nth-child(n):hover {
       background-color: #f2f2f2;
     }
+
     .table {
       border: 1px solid #ddd;
       max-height: 900px;
       font-size: 13px;
-      overflow: scroll !important;
 
       .tr {
         :last-child {
@@ -98,19 +101,17 @@ export default function TablaLiquidacion({
 
       &.sticky {
         overflow: scroll;
-        .header {
+        .header,
+        .th {
           position: sticky;
           z-index: 1;
-        }
-
-        .header {
           top: 0;
           box-shadow: 0px 3px 3px #ccc;
           background-color: white;
+          height: 50px;
         }
 
         .body {
-          overflow: scroll;
           z-index: 0;
         }
 
@@ -129,6 +130,12 @@ export default function TablaLiquidacion({
       .btn {
         font-size: 12px;
       }
+
+      .footer {
+        padding: 5px 0;
+        background-color: #f2dede;
+        color: #e62f4d;
+      }
     }
   `;
 
@@ -142,35 +149,60 @@ export default function TablaLiquidacion({
       {
         Header: "Alumno",
         accessor: "alumno",
+        minWidth: 150,
+        width: window.screen.width < 1367 ? 265 : 345,
+        maxWidth: 345,
         sticky: "top",
-        Cell: ({ value }) => <div style={{ textAlign: "left" }}>{value}</div>,
+        Cell: ({ value }) => (
+          <div
+            style={{
+              textAlign: "left",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {value}
+          </div>
+        ),
       },
       {
         Header: "Nivel",
         accessor: "nivel",
+        minWidth: 100,
+        width: window.screen.width < 1367 ? 150 : 229,
+        maxWidth: 229,
         sticky: "top",
       },
       {
         Header: "Curso",
         accessor: "nombre",
+        minWidth: 100,
+        width: window.screen.width < 1367 ? 150 : 229,
+        maxWidth: 229,
         sticky: "top",
       },
       {
         Header: "Fecha Liquidación",
         accessor: "fhliq",
+        minWidth: 100,
+        width: window.screen.width < 1367 ? 150 : 229,
+        maxWidth: 229,
         sticky: "top",
       },
       {
         Header: "Acción",
         accessor: "traspaso",
+        minWidth: 100,
+        width: window.screen.width < 1367 ? 150 : 229,
+        maxWidth: 229,
         sticky: "top",
         Cell: ({ cell }) => (
           <div>
             <button
               className={
                 cell.value === "0"
-                  ? "btn rounded btn-success"
-                  : "btn rounded btn-danger"
+                  ? "btn rounded btn-success btn-sm"
+                  : "btn rounded btn-danger btn-sm"
               }
               value={cell}
               onClick={(e) => {
@@ -192,6 +224,9 @@ export default function TablaLiquidacion({
       {
         Header: "Imprimir",
         accessor: "imprimir",
+        minWidth: 100,
+        width: window.screen.width < 1367 ? 150 : 229,
+        maxWidth: 229,
         sticky: "top",
         Cell: ({ cell }) => (
           <button
@@ -200,24 +235,27 @@ export default function TablaLiquidacion({
             }
             onClick={(e) => imprimirLiquidaciones(e, cell)}
           >
-            <img src={printer} alt=""></img>
+            <img width={25} src={printer} alt=""></img>
           </button>
         ),
       },
       {
         Header: "Enviar Correo",
         accessor: "enviar",
+        minWidth: 100,
+        width: window.screen.width < 1367 ? 150 : 229,
+        maxWidth: 229,
         sticky: "top",
         Cell: ({ cell }) => (
           <button
             className={
-              cell.value === "0" ? "d-none" : "border-0 bg-transparent"
+              cell.value === "0" ? "d-none" : "border-0 bg-transparent mt-1"
             }
             onClick={(e) => {
               enviarLiquidaciones(e, cell);
             }}
           >
-            <img src={mail} alt=""></img>
+            <img width={25} src={mail} alt=""></img>
           </button>
         ),
       },
@@ -225,14 +263,6 @@ export default function TablaLiquidacion({
     [ciclo, idCuota, idAlumno]
   );
 
-  const defaultColumn = useMemo(
-    () => ({
-      minWidth: 100,
-      width: window.screen.width < 1367 ? 167.4 : 220,
-      maxWidth: 250,
-    }),
-    []
-  );
   function handleClick(e, cell) {
     e.preventDefault();
     document
@@ -322,7 +352,7 @@ export default function TablaLiquidacion({
   }
 
   const tableInstance = useTable(
-    { columns, data: liquidaciones, defaultColumn },
+    { columns, data: liquidaciones },
     useSortBy,
     useBlockLayout,
     useResizeColumns,
@@ -343,7 +373,7 @@ export default function TablaLiquidacion({
                   {...column.getHeaderProps(
                     column.getSortByToggleProps({ title: "Cambiar Orden" })
                   )}
-                  className="th"
+                  className="th pt-3"
                 >
                   {column.render("Header")}
                   <span>
@@ -373,6 +403,13 @@ export default function TablaLiquidacion({
               </div>
             );
           })}
+        </div>
+        <div>
+          {liquidaciones.length === 0 ? (
+            <div className="footer">No se registra información</div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </Styles>
