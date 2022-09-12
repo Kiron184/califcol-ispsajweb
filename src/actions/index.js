@@ -53,3 +53,10 @@ export function cargarTablaLiquidaciones(liquidaciones) {
     payload: liquidaciones,
   };
 }
+
+export function cargarTablaLiquidacionesCurso(liquidaciones) {
+  return {
+    type: "CARGAR_LIQUIDACIONES_CURSO",
+    payload: liquidaciones,
+  };
+}

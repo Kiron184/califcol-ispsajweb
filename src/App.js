@@ -8,6 +8,7 @@ import Concepto from "./components/Conceptos/Concepto";
 import Becas from "./components/becas/Becas";
 import Beca from "./components/becas/Beca";
 import LiquidacionIndividual from "./components/Liquidacion_Individual/LiquidacionIndividual";
+import LiquidacionCurso from "./components/Liquidacion_Curso/LiquidacionCurso";
 
 function App() {
   return (
@@ -19,7 +20,11 @@ function App() {
           <Route path="/conceptosgenerales/:id" element={<Concepto />} />
           <Route path="/becas" element={<Becas />} />
           <Route path="/becas/:id" element={<Beca />} />
-          <Route path="/liquidacionindividual" element={<LiquidacionIndividual />} />
+          <Route
+            path="/liquidacionindividual"
+            element={<LiquidacionIndividual />}
+          />
+          <Route path="/liquidacioncurso" element={<LiquidacionCurso />} />
         </Routes>
       </Container>
     </React.Fragment>

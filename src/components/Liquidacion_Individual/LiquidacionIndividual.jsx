@@ -76,10 +76,12 @@ export default function LiquidacionIndividual() {
         </div>
         <hr className="w-100 mx-0" />
         <div className="">
-          <div className="d-flex flex-md-row flex-column">
+          <div className="d-flex flex-xl-row flex-column">
             <select
-              className="form-control col-4 col-lg-2 col-xl-1 mr-3"
-              onChange={(e) => ActualizarComboCuotas(e)}
+              className="form-control col-3 col-sm-2 col-lg-2 col-xl-1 mr-3"
+              onChange={(e) => {
+                ActualizarComboCuotas(e);
+              }}
             >
               {comboCiclos &&
                 comboCiclos?.map((ciclo) => {
@@ -94,7 +96,7 @@ export default function LiquidacionIndividual() {
                 })}
             </select>
             <select
-              className="form-control col-12 col-lg-6 col-xl-4 mr-3"
+              className="form-control col-12 col-sm-7 col-xl-4 mr-3 my-1 my-xl-0"
               onChange={(e) => {
                 let info = e.target.value.split(",", 2);
                 setCuota(info);
@@ -113,8 +115,10 @@ export default function LiquidacionIndividual() {
                 })}
             </select>
             <select
-              className="form-control col-12 col-lg-3 col-xl-4"
-              onChange={(e) => setIdAlumno(e.target.value)}
+              className="form-control col-12 col-sm-7 col-xl-4"
+              onChange={(e) => {
+                setIdAlumno(e.target.value);
+              }}
             >
               <option selected value={0}>
                 Seleccional un Alumno

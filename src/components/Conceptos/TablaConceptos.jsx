@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../style/styles.css";
@@ -13,8 +13,10 @@ export default function TablaConceptos({ name, filter }) {
   const dispatch = useDispatch();
   const navigation = useNavigate();
   const conceptos = useSelector((state) => state.conceptosGenerales);
+  const [order, setOrder] = useState("ASC");
 
   function cargarTabla() {
+    document.querySelector(".tr-loader").classList.remove("d-none");
     let busqueda = "";
     if (name.length > 3) {
       busqueda = "por_nombre";
@@ -29,12 +31,14 @@ export default function TablaConceptos({ name, filter }) {
             name
         )
         .then((response) => {
+          document.querySelector(".tr-loader").classList.add("d-none");
           return dispatch(cargarConceptosGenerales(response.data));
         });
     }
   }
 
   useEffect(() => {
+    dispatch(cargarConceptosGenerales([]));
     cargarTabla();
   }, [filter, name]);
 
@@ -58,18 +62,57 @@ export default function TablaConceptos({ name, filter }) {
     dispatch(borrarConcepto(id));
   }
 
+  function orden(e, col) {
+    e.preventDefault();
+
+    let i = col === "descripcion" ? 0 : 1;
+
+    if (document.querySelector(`.${col}`).innerHTML.slice(-1) === "↑") {
+      if (col === "descripcion") {
+        document.querySelector(`.${col}`).innerHTML = `Descripción ↓`;
+      } else if (col === "tipo") {
+        document.querySelector(`.${col}`).innerHTML = `Tipo ↓`;
+      }
+    } else {
+      if (col === "descripcion") {
+        document.querySelector(`.${col}`).innerHTML = `Descripción ↑`;
+      } else if (col === "tipo") {
+        document.querySelector(`.${col}`).innerHTML = `Tipo ↑`;
+      }
+    }
+
+    if (order === "ASC") {
+      const sorted = [...conceptos].sort((a, b) => (a[i] > b[i] ? 1 : -1));
+      dispatch(cargarConceptosGenerales(sorted));
+      setOrder("DESC");
+    }
+
+    if (order === "DESC") {
+      const sorted = [...conceptos].sort((a, b) => (a[i] < b[i] ? 1 : -1));
+      dispatch(cargarConceptosGenerales(sorted));
+      setOrder("ASC");
+    }
+  }
+
   return (
-    <div
-      style={{ height: "900px" }}
-      className="overflow-scroll table-responsive"
-    >
-      <table className="w-100 table-striped table-hover table-condensed">
-        <thead className="bg-transparent">
-          <tr>
-            <th className="col-6">Descripcion</th>
-            <th className="col-4">Tipo</th>
-            <th className="col">Editar</th>
-            <th className="col">Eliminar</th>
+    <div style={{ height: "900px" }} className="table-responsive">
+      <table className="w-100 table-condensed table-hover table-bordered text-center table border-top border-secondary">
+        <thead className="py-5 header">
+          <tr className="bg-light" style={{ cursor: "pointer" }}>
+            <th
+              onClick={(e) => orden(e, "descripcion")}
+              className="col-5 text-nowrap descripcion"
+            >
+              Descripcion
+            </th>
+            <th
+              onClick={(e) => orden(e, "tipo")}
+              className="col-3 text-nowrap tipo"
+            >
+              Tipo
+            </th>
+            <th className="col-1 text-nowrap">Editar</th>
+            <th className="col-1 text-nowrap">Eliminar</th>
           </tr>
         </thead>
         <tbody>
@@ -88,32 +131,32 @@ export default function TablaConceptos({ name, filter }) {
                   navigation(`/conceptosgenerales/${u[2]}`);
                 }}
               >
-                <td>
-                  <div className="ml-3">
+                <td className="align-middle">
+                  <div className="">
                     <p
                       style={{ fontSize: "13px" }}
-                      className="fw-bold mb-1 text-nowrap "
+                      className="fw-bold mb-0 text-nowrap text-left"
                     >
                       {u[0].toUpperCase()}
                     </p>
                   </div>
                 </td>
-                <td>
-                  <div className=" ml-3">
+                <td className="align-middle">
+                  <div className="">
                     <p
                       style={{ fontSize: "13px" }}
-                      className="fw-bold mb-1 text-nowrap "
+                      className="fw-bold mb-0 text-nowrap "
                     >
                       {u[1].toUpperCase()}
                     </p>
                   </div>
                 </td>
 
-                <td className="">
+                <td className="align-middle">
                   <NavLink
                     to={"/conceptosgenerales/" + u[2]}
                     type="button"
-                    className="ml-3 btn"
+                    className="btn p-0"
                     id={u[2]}
                     edit="true"
                     onClick={(e) => {
@@ -128,9 +171,9 @@ export default function TablaConceptos({ name, filter }) {
                     <img width="20px" alt="edit" src={edit} />
                   </NavLink>
                 </td>
-                <td className="d-flex justify-content-center">
+                <td className="d-flex justify-content-center align-middle">
                   <button
-                    className="btn mt-2 mt-lg-0"
+                    className="btn mt-2 mt-lg-0 p-0"
                     onClick={(e) => {
                       Swal.fire({
                         title:
@@ -154,8 +197,30 @@ export default function TablaConceptos({ name, filter }) {
                 </td>
               </tr>
             ))}
+          <tr>
+            <td colSpan="4">
+              <div>
+                {conceptos === [] || !conceptos ? (
+                  <div className="footer text-center">
+                    No se registra información
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+            </td>
+          </tr>
         </tbody>
       </table>
+      <div id="tr-loader" className="d-none tr-loader">
+        <div colSpan="7">
+          <div
+            className="spinner-border text-primary"
+            style={{ width: "3rem", height: "3rem" }}
+            role="status"
+          ></div>
+        </div>
+      </div>
     </div>
   );
 }

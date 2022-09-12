@@ -6,6 +6,7 @@ const initialState = {
   beca: [],
   conceptosVinculados: [],
   liquidaciones: [],
+  liquidacionesCurso: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -52,6 +53,12 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         liquidaciones: action.payload,
       };
+    case "CARGAR_LIQUIDACIONES_CURSO":
+      return {
+        ...state,
+        liquidacionesCurso: action.payload,
+      };
+
     default:
       return { ...state };
   }

@@ -17,22 +17,12 @@ export default function ConceptosGenerales() {
           </p>
         </div>
         <hr className="w-100 mx-0" />
-        <div className="col col-lg-6">
+        <div className="col col-lg-6 p-0">
           <div className="d-flex flex-md-row flex-column">
-            <select
-              className="form-control w-md-25"
-              onChange={(e) => {
-                return setFilter(e.target.value);
-              }}
-            >
-              <option value="0">Filtrar por</option>
-              <option value="1">Activos</option>
-              <option value="2">Inactivos</option>
-            </select>
             <input
               placeholder="Buscar por Nombre"
               type="search"
-              className="form-control w-md-25 mx-md-2 my-1 my-md-0"
+              className="form-control w-md-25 mr-md-2 my-1 my-md-0"
               onChange={(e) => {
                 return setSearch(e.target.value);
               }}

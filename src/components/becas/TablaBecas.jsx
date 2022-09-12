@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../style/styles.css";
@@ -13,8 +13,10 @@ export default function TablaBecas({ name, filter }) {
   const dispatch = useDispatch();
   const navigation = useNavigate();
   const becas = useSelector((state) => state.becas);
+  const [order, setOrder] = useState("ASC");
 
   async function cargarTabla() {
+    document.querySelector(".tr-loader").classList.remove("d-none");
     if (name.length > 3 || !name) {
       await axios
         .get(
@@ -22,12 +24,13 @@ export default function TablaBecas({ name, filter }) {
             name
         )
         .then((response) => {
-          console.log(response);
+          document.querySelector(".tr-loader").classList.add("d-none");
           return dispatch(cargarBecas(response.data));
         });
     }
   }
   useEffect(() => {
+    dispatch(cargarBecas([]));
     cargarTabla();
   }, [name, filter]);
 
@@ -48,18 +51,57 @@ export default function TablaBecas({ name, filter }) {
     dispatch(borrarBeca(id));
   }
 
+  function orden(e, col) {
+    e.preventDefault();
+
+    let i = col === "codigo" ? 1 : 0;
+
+    if (document.querySelector(`.${col}`).innerHTML.slice(-1) === "↑") {
+      if (col === "codigo") {
+        document.querySelector(`.${col}`).innerHTML = `Código ↓`;
+      } else if (col === "nombre") {
+        document.querySelector(`.${col}`).innerHTML = `Nombre ↓`;
+      }
+    } else {
+      if (col === "codigo") {
+        document.querySelector(`.${col}`).innerHTML = `Código ↑`;
+      } else if (col === "nombre") {
+        document.querySelector(`.${col}`).innerHTML = `Nombre ↑`;
+      }
+    }
+
+    if (order === "ASC") {
+      const sorted = [...becas].sort((a, b) => (a[i] > b[i] ? 1 : -1));
+      dispatch(cargarBecas(sorted));
+      setOrder("DESC");
+    }
+
+    if (order === "DESC") {
+      const sorted = [...becas].sort((a, b) => (a[i] < b[i] ? 1 : -1));
+      dispatch(cargarBecas(sorted));
+      setOrder("ASC");
+    }
+  }
+
   return (
-    <div
-      style={{ height: "900px" }}
-      className="overflow-scroll table-responsive"
-    >
-      <table className="w-100 table-striped table-hover table-condensed">
-        <thead className="bg-transparent">
-          <tr>
-            <th className="col-6">Código</th>
-            <th className="col-4">Nombre</th>
-            <th className="col">Editar</th>
-            <th className="col">Eliminar</th>
+    <div style={{ height: "900px" }} className="table-responsive">
+      <table className="w-100 table-condensed table-hover table-bordered text-center table border-top border-secondary">
+        <thead className="py-5 header">
+          <tr className="bg-light" style={{ cursor: "pointer" }}>
+            <th
+              onClick={(e) => orden(e, "codigo")}
+              className="col-1 text-nowrap codigo"
+            >
+              Código
+            </th>
+            <th
+              onClick={(e) => orden(e, "nombre")}
+              className="col-5 text-nowrap nombre"
+            >
+              Nombre
+            </th>
+            <th className="col-1 text-nowrap">Editar</th>
+            <th className="col-1 text-nowrap">Eliminar</th>
           </tr>
         </thead>
         <tbody>
@@ -78,32 +120,32 @@ export default function TablaBecas({ name, filter }) {
                   navigation(`/becas/${b[1]}`);
                 }}
               >
-                <td>
-                  <div className="ml-3">
+                <td className="align-middle">
+                  <div className="">
                     <p
                       style={{ fontSize: "13px" }}
-                      className="fw-bold mb-1 text-nowrap "
+                      className="fw-bold text-nowrap "
                     >
                       {b[1]}
                     </p>
                   </div>
                 </td>
-                <td>
-                  <div className=" ml-3">
+                <td className="text-left">
+                  <div className="">
                     <p
                       style={{ fontSize: "13px" }}
-                      className="fw-bold mb-1 text-nowrap "
+                      className="fw-bold text-nowrap "
                     >
                       {b[0]}
                     </p>
                   </div>
                 </td>
 
-                <td className="">
+                <td className="align-middle">
                   <NavLink
                     to={"/becas/" + b[1]}
                     type="button"
-                    className="ml-3 btn"
+                    className="p-0 btn"
                     id={b[1]}
                     edit="true"
                     onClick={(e) => {
@@ -118,9 +160,9 @@ export default function TablaBecas({ name, filter }) {
                     <img width="20px" alt="edit" src={edit} />
                   </NavLink>
                 </td>
-                <td className="d-flex justify-content-center">
+                <td className="">
                   <button
-                    className="btn mt-2 mt-lg-0"
+                    className="btn"
                     onClick={(e) => {
                       Swal.fire({
                         title:
@@ -144,8 +186,30 @@ export default function TablaBecas({ name, filter }) {
                 </td>
               </tr>
             ))}
+          <tr>
+            <td colSpan="4">
+              <div>
+                {becas === [] || !becas ? (
+                  <div className="footer text-center">
+                    No se registra información
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+            </td>
+          </tr>
         </tbody>
       </table>
+      <div id="tr-loader" className="d-none tr-loader">
+        <div colSpan="7">
+          <div
+            className="spinner-border text-primary"
+            style={{ width: "3rem", height: "3rem" }}
+            role="status"
+          ></div>
+        </div>
+      </div>
     </div>
   );
 }

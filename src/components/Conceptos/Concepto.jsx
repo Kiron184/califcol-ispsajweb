@@ -308,7 +308,7 @@ export default function Docente() {
                     className="btn btn-secondary px-3 m-3 text-light shadow-sm"
                     id="id_cancelar"
                     onClick={() => {
-                      navigation("/home");
+                      navigation("/conceptosgenerales");
                       document
                         .querySelector(".navbar")
                         .classList.remove("active-nav");

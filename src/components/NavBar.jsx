@@ -5,8 +5,10 @@ import profile from "../utils/user.png";
 import help from "../utils/help.png";
 import "../style/styles.css";
 import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 export default function NavBar() {
+  const dispatch = useDispatch();
   if (window.location.href !== "/" && document.querySelector(".navbar")) {
     document.querySelector(".navbar").classList.remove("active-nav");
   }
@@ -141,10 +143,19 @@ export default function NavBar() {
                   Asignación de Convenios
                 </a>
               </li>
-              <li style={{ listStyle: "none" }}>
-                <a href="-" className="collapse-item">
+              <li
+                style={{ listStyle: "none" }}
+                onClick={(e) => {
+                  document
+                    .getElementById("calificaciones")
+                    .classList.remove("show");
+
+                  handleClick(e);
+                }}
+              >
+                <NavLink to="/liquidacioncurso" className="collapse-item">
                   Liquidación por Curso
-                </a>
+                </NavLink>
               </li>
               <li
                 style={{ listStyle: "none" }}

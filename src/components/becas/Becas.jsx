@@ -17,7 +17,7 @@ export default function ConceptosGenerales() {
           </p>
         </div>
         <hr className="w-100 mx-0" />
-        <div className="col col-lg-6">
+        <div className="col col-lg-6 p-0">
           <div className="d-flex flex-md-row flex-column">
             <select
               className="form-control w-md-25"

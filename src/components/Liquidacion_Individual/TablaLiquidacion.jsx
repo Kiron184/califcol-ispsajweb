@@ -1,20 +1,13 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import "../../style/styles.css";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { cargarTablaLiquidaciones } from "../../actions";
-import {
-  useTable,
-  useSortBy,
-  useBlockLayout,
-  useResizeColumns,
-} from "react-table";
-import mail from "../../utils/mail.png";
 import printer from "../../utils/printer.png";
-import { useSticky } from "react-table-sticky";
-import styled from "styled-components";
+import mail from "../../utils/mail.png";
+import { useState } from "react";
 
 export default function TablaLiquidacion({
   ciclo,
@@ -24,8 +17,10 @@ export default function TablaLiquidacion({
 }) {
   const dispatch = useDispatch();
   const liquidaciones = useSelector((state) => state.liquidaciones);
+  const [order, setOrder] = useState("ASC");
 
   function cargarTabla() {
+    document.querySelector(".tr-loader").classList.remove("d-none");
     axios
       .get(
         "https://www.califcolegios.wnpower.host/donboscocastelarweb/app/liquidacionindividual/traerliquidacionesalumnos.php?ciclo=" +
@@ -36,6 +31,7 @@ export default function TablaLiquidacion({
           idAlumno
       )
       .then((response) => {
+        document.querySelector(".tr-loader").classList.add("d-none");
         if (response.data) {
           return dispatch(cargarTablaLiquidaciones(response.data));
         } else {
@@ -44,232 +40,17 @@ export default function TablaLiquidacion({
       });
   }
 
-  const Styles = styled.div`
-    .tr:nth-child(even) {
-      background-color: #f7f7f7;
-    }
-    .tr:nth-child(n):hover {
-      background-color: #f2f2f2;
-    }
-
-    .table {
-      border: 1px solid #ddd;
-      max-height: 900px;
-      font-size: 13px;
-
-      .tr {
-        :last-child {
-          .td {
-            border-bottom: 0;
-          }
-        }
-      }
-
-      .th {
-        font-weight: bold;
-      }
-
-      .th,
-      .td {
-        padding: 5px;
-        border-bottom: 1px solid #ddd;
-        border-right: 1px solid #ddd;
-        overflow: hidden;
-
-        position: relative;
-        :last-child {
-          border-right: 0;
-        }
-      }
-
-      .resizer {
-        display: inline-block;
-        width: 5px;
-        height: 100%;
-        position: absolute;
-        right: 0;
-        top: 0;
-        transform: translateX(50%);
-        z-index: 1;
-        ${"" /* prevents from scrolling while dragging on touch devices */}
-        touch-action:none;
-
-        &.isResizing {
-          background: black;
-        }
-      }
-
-      &.sticky {
-        overflow: scroll;
-        .header,
-        .th {
-          position: sticky;
-          z-index: 1;
-          top: 0;
-          box-shadow: 0px 3px 3px #ccc;
-          background-color: white;
-          height: 50px;
-        }
-
-        .body {
-          z-index: 0;
-        }
-
-        [data-sticky-td] {
-          position: sticky;
-        }
-
-        [data-sticky-last-left-td] {
-          box-shadow: 2px 0px 3px #ccc;
-        }
-
-        [data-sticky-first-right-td] {
-          box-shadow: -2px 0px 3px #ccc;
-        }
-      }
-      .btn {
-        font-size: 12px;
-      }
-
-      .footer {
-        padding: 5px 0;
-        background-color: #f2dede;
-        color: #e62f4d;
-      }
-    }
-  `;
-
   useEffect(() => {
+    dispatch(cargarTablaLiquidaciones([]));
     cargarTabla();
-    document.querySelector(".th").removeAttribute("title");
   }, [ciclo, idCuota, idAlumno]);
 
-  const columns = useMemo(
-    () => [
-      {
-        Header: "Alumno",
-        accessor: "alumno",
-        minWidth: 150,
-        width: window.screen.width < 1367 ? 265 : 345,
-        maxWidth: 345,
-        sticky: "top",
-        Cell: ({ value }) => (
-          <div
-            style={{
-              textAlign: "left",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {value}
-          </div>
-        ),
-      },
-      {
-        Header: "Nivel",
-        accessor: "nivel",
-        minWidth: 100,
-        width: window.screen.width < 1367 ? 150 : 229,
-        maxWidth: 229,
-        sticky: "top",
-      },
-      {
-        Header: "Curso",
-        accessor: "nombre",
-        minWidth: 100,
-        width: window.screen.width < 1367 ? 150 : 229,
-        maxWidth: 229,
-        sticky: "top",
-      },
-      {
-        Header: "Fecha Liquidación",
-        accessor: "fhliq",
-        minWidth: 100,
-        width: window.screen.width < 1367 ? 150 : 229,
-        maxWidth: 229,
-        sticky: "top",
-      },
-      {
-        Header: "Acción",
-        accessor: "traspaso",
-        minWidth: 100,
-        width: window.screen.width < 1367 ? 150 : 229,
-        maxWidth: 229,
-        sticky: "top",
-        Cell: ({ cell }) => (
-          <div>
-            <button
-              className={
-                cell.value === "0"
-                  ? "btn rounded btn-success btn-sm"
-                  : "btn rounded btn-danger btn-sm"
-              }
-              value={cell}
-              onClick={(e) => {
-                handleClick(e, cell);
-              }}
-            >
-              {cell.value === "0" ? "Liquidar" : "Revertir"}
-            </button>
-            <div
-              id={"spinner " + cell.row.id}
-              className="ml-3 mt-2 spinner-border spinner-border-sm spinner position-absolute d-none"
-              role="status"
-            >
-              <span class="visually-hidden"></span>
-            </div>
-          </div>
-        ),
-      },
-      {
-        Header: "Imprimir",
-        accessor: "imprimir",
-        minWidth: 100,
-        width: window.screen.width < 1367 ? 150 : 229,
-        maxWidth: 229,
-        sticky: "top",
-        Cell: ({ cell }) => (
-          <button
-            className={
-              cell.value === "0" ? "d-none" : "border-0 bg-transparent"
-            }
-            onClick={(e) => imprimirLiquidaciones(e, cell)}
-          >
-            <img width={25} src={printer} alt=""></img>
-          </button>
-        ),
-      },
-      {
-        Header: "Enviar Correo",
-        accessor: "enviar",
-        minWidth: 100,
-        width: window.screen.width < 1367 ? 150 : 229,
-        maxWidth: 229,
-        sticky: "top",
-        Cell: ({ cell }) => (
-          <button
-            className={
-              cell.value === "0" ? "d-none" : "border-0 bg-transparent mt-1"
-            }
-            onClick={(e) => {
-              enviarLiquidaciones(e, cell);
-            }}
-          >
-            <img width={25} src={mail} alt=""></img>
-          </button>
-        ),
-      },
-    ],
-    [ciclo, idCuota, idAlumno]
-  );
-
-  function handleClick(e, cell) {
+  function handleClick(e, l) {
     e.preventDefault();
     document
-      .getElementById(`spinner ${cell.row.id}`)
+      .getElementById(`btn-accion ${l.idalumno}`)
       .classList.remove("d-none");
-    console.log(document.getElementById(`${cell.row.id}`));
-    if (cell.row.original.traspaso === "1") {
+    if (l.traspaso === "1") {
       axios
         .post(
           "https://www.califcolegios.wnpower.host/donboscocastelarweb/app/liquidacionindividual/revertircuota.php?ciclo=" +
@@ -277,11 +58,11 @@ export default function TablaLiquidacion({
             "&idcuota=" +
             idCuota +
             "&idcurso=" +
-            cell.row.original.idcurso +
+            l.idcurso +
             "&idnivel=" +
-            cell.row.original.idnivel +
+            l.idnivel +
             "&idalumno=" +
-            cell.row.original.idalumno
+            l.idalumno
         )
         .then((response) => {
           if (response.data !== "") {
@@ -299,45 +80,51 @@ export default function TablaLiquidacion({
           "idcuota=" +
           idCuota +
           "&idcurso=" +
-          cell.row.original.idcurso +
+          l.idcurso +
           "&userid=1" +
           "&idalumno=" +
-          cell.row.original.idalumno
+          l.idalumno
       );
       cargarTabla();
     }
-    cargarTabla();
+    setTimeout(() => {
+      document
+        .getElementById(`btn-accion ${l.idalumno}`)
+        .classList.add("d-none");
+      cargarTabla();
+    }, 800);
   }
 
-  function imprimirLiquidaciones(e, cell) {
+  function imprimirLiquidaciones(e, l) {
     e.preventDefault();
     window.open(
       "https://www.califcolegios.wnpower.host/donboscocastelar/aranceles/liquidacion/imprimir_boletapago.php?" +
         "idcuota=" +
         idCuota +
         "&idalum=" +
-        cell.row.original.idalumno
+        l.idalumno
     );
   }
 
-  function enviarLiquidaciones(e, cell) {
+  function enviarLiquidaciones(e, l) {
     e.preventDefault();
     axios
       .post(
         "https://www.califcolegios.wnpower.host/donboscocastelar/aranceles/liquidacion/enviar_boletapagoweb.php?idcuota=" +
           idCuota +
           "&idalum=" +
-          cell.row.original.idalumno +
+          l.idalumno +
           "&cuota=" +
           nombreCuota
       )
       .then((response) => {
-        console.log(response.data);
+        console.log(response?.data);
 
-        if (response.data.toString() === "") {
+        if (response?.data?.toString() === "") {
           Swal.fire({
             title: "El Correo ha sido enviado con EXITO",
             icon: "success",
+            html: `${response.data}`,
             showCloseButton: true,
           });
         } else {
@@ -351,67 +138,218 @@ export default function TablaLiquidacion({
       });
   }
 
-  const tableInstance = useTable(
-    { columns, data: liquidaciones },
-    useSortBy,
-    useBlockLayout,
-    useResizeColumns,
-    useSticky
-  );
+  function orden(e, c) {
+    e.preventDefault();
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    tableInstance;
+    let col = c.toLowerCase();
+
+    if (document.querySelector(`.${col}`).innerHTML.slice(-1) === "↑") {
+      if (col === "fhliq") {
+        document.querySelector(`.${col}`).innerHTML = `Fecha Liq. ↓`;
+      } else if (col === "nombre") {
+        document.querySelector(`.${col}`).innerHTML = `Curso ↓`;
+      } else if (col === "traspaso") {
+        document.querySelector(`.${col}`).innerHTML = `Accion ↓`;
+      } else {
+        document.querySelector(`.${col}`).innerHTML = `${c} ↓`;
+      }
+    } else {
+      if (col === "fhliq") {
+        document.querySelector(`.${col}`).innerHTML = `Fecha Liq. ↑`;
+      } else if (col === "nombre") {
+        document.querySelector(`.${col}`).innerHTML = `Curso ↑`;
+      } else if (col === "traspaso") {
+        document.querySelector(`.${col}`).innerHTML = `Accion ↑`;
+      } else {
+        document.querySelector(`.${col}`).innerHTML = `${c} ↑`;
+      }
+    }
+
+    if (order === "ASC" && col === "fhliq") {
+      const sorted = [...liquidaciones].sort((a, b) =>
+        a[col] > b[col] ? 1 : -1
+      );
+      dispatch(cargarTablaLiquidaciones(sorted));
+      setOrder("DESC");
+    } else if (order === "ASC") {
+      const sorted = [...liquidaciones].sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      );
+      dispatch(cargarTablaLiquidaciones(sorted));
+      setOrder("DESC");
+    }
+
+    if (order === "DESC" && col === "fhliq") {
+      const sorted = [...liquidaciones].sort((a, b) =>
+        a[col] < b[col] ? 1 : -1
+      );
+      dispatch(cargarTablaLiquidaciones(sorted));
+      setOrder("ASC");
+    } else if (order === "DESC") {
+      const sorted = [...liquidaciones].sort((a, b) =>
+        a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+      );
+      dispatch(cargarTablaLiquidaciones(sorted));
+      setOrder("ASC");
+    }
+  }
 
   return (
-    <Styles>
-      <div {...getTableProps()} className="table sticky text-center">
-        <div className="header">
-          {headerGroups.map((headerGroup) => (
-            <div {...headerGroup.getHeaderGroupProps()} className="tr">
-              {headerGroup.headers.map((column) => (
-                <div
-                  {...column.getHeaderProps(
-                    column.getSortByToggleProps({ title: "Cambiar Orden" })
-                  )}
-                  className="th pt-3"
-                >
-                  {column.render("Header")}
-                  <span>
-                    {column.isSorted ? (column.isSortedDesc ? " ↓" : " ↑") : ""}
-                  </span>
-                  <div
-                    {...column.getResizerProps()}
-                    className={`resizer ${
-                      column.isResizing ? "isResizing" : ""
-                    }`}
-                  />
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-        <div {...getTableBodyProps()} className="body">
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <div {...row.getRowProps()} className="tr" id={row.id}>
-                {row.cells.map((cell) => (
-                  <div {...cell.getCellProps()} className="td">
-                    {cell.render("Cell")}
+    <div style={{ height: "900px" }} class="table-responsive">
+      <table className="w-100 table-condensed table-hover table-bordered text-center table border-top border-secondary">
+        <thead className="py-5 header">
+          <tr className="bg-light" style={{ cursor: "pointer" }}>
+            <th
+              className="col-3 alumno text-nowrap"
+              onClick={(e) => orden(e, "Alumno")}
+            >
+              Alumno ↑
+            </th>
+            <th
+              className="col-1 nivel text-nowrap"
+              onClick={(e) => orden(e, "Nivel")}
+            >
+              Nivel ↑
+            </th>
+            <th
+              className="col-1 nombre text-nowrap"
+              onClick={(e) => orden(e, "nombre")}
+            >
+              Curso ↑
+            </th>
+            <th
+              className="col-1 fhliq text-nowrap"
+              onClick={(e) => orden(e, "fhliq")}
+            >
+              Fecha Liq. ↑
+            </th>
+            <th
+              style={{ minWidth: "100px" }}
+              className="w-100 col col-xl-1 text-nowrap traspaso"
+              onClick={(e) => orden(e, "traspaso")}
+            >
+              Acción ↑
+            </th>
+            <th className="col-1 text-nowrap">Imprimir</th>
+            <th className="col-1 text-nowrap">Enviar Correo</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {liquidaciones &&
+            liquidaciones.map((l) => (
+              <tr key={l[2]}>
+                <td className="align-middle">
+                  <p
+                    style={{ fontSize: "13px" }}
+                    className="fw-bold text-nowrap text-left mb-0"
+                  >
+                    {l.alumno}
+                  </p>
+                </td>
+                <td className="align-middle">
+                  <p
+                    style={{ fontSize: "13px" }}
+                    className="fw-bold text-nowrap mb-0"
+                  >
+                    {l.nivel}
+                  </p>
+                </td>
+                <td className="align-middle">
+                  <p
+                    style={{ fontSize: "13px" }}
+                    className="fw-bold text-nowrap mb-0"
+                  >
+                    {l.nombre}
+                  </p>
+                </td>
+
+                <td className="align-middle">
+                  <p
+                    style={{ fontSize: "13px" }}
+                    className="fw-bold text-nowrap mb-0"
+                  >
+                    {l.fhliq}
+                  </p>
+                </td>
+
+                <td className="px-5 align-middle">
+                  <div className="d-block align-middle">
+                    <button
+                      style={{
+                        height: "25px",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                      }}
+                      className={
+                        l.traspaso === "0"
+                          ? "btn rounded btn-success btn-sm text-nowrap py-0 px-1"
+                          : "btn rounded btn-danger btn-sm text-nowrap py-0 px-1"
+                      }
+                      onClick={(e) => {
+                        handleClick(e, l);
+                      }}
+                    >
+                      {l.traspaso === "0" ? "Liquidar" : "Revertir"}
+                      <span
+                        id={`btn-accion ${l.idalumno}`}
+                        className="spinner-border spinner-border-sm ml-2 d-none"
+                      ></span>
+                    </button>
                   </div>
-                ))}
+                </td>
+
+                <td className="align-middle">
+                  <button
+                    className={
+                      l.traspaso === "0" ? "d-none" : "border-0 bg-transparent"
+                    }
+                    onClick={(e) => imprimirLiquidaciones(e, l)}
+                  >
+                    <img width={25} src={printer} alt=""></img>
+                  </button>
+                </td>
+
+                <td className="align-middle">
+                  <button
+                    className={
+                      l.traspaso === "0"
+                        ? "d-none mx-4"
+                        : "border-0 bg-transparent"
+                    }
+                    onClick={(e) => {
+                      enviarLiquidaciones(e, l);
+                    }}
+                  >
+                    <img width={25} src={mail} alt=""></img>
+                  </button>
+                </td>
+              </tr>
+            ))}
+          <tr>
+            <td colSpan="7">
+              <div>
+                {liquidaciones.length === 0 ? (
+                  <div className="footer text-center">
+                    No se registra información
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
-            );
-          })}
-        </div>
-        <div>
-          {liquidaciones.length === 0 ? (
-            <div className="footer">No se registra información</div>
-          ) : (
-            ""
-          )}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div id="tr-loader" className="d-none tr-loader">
+        <div colSpan="7">
+          <div
+            className="spinner-border text-primary"
+            style={{ width: "3rem", height: "3rem" }}
+            role="status"
+          ></div>
         </div>
       </div>
-    </Styles>
+    </div>
   );
 }

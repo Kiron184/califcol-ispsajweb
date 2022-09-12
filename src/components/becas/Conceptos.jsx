@@ -11,14 +11,17 @@ export default function Conceptos({ id }) {
   const dispatch = useDispatch();
   const conceptos = useSelector((state) => state.conceptosVinculados);
   const [comboConcepto, setComboConcepto] = useState();
+  const [order, setOrder] = useState("ASC");
 
   function CargarConceptos() {
+    document.querySelector(".tr-loader").classList.remove("d-none");
     axios
       .get(
         "https://www.califcolegios.wnpower.host/donboscocastelarweb/app/traerconceptovinc.php?idbeca=" +
           id
       )
       .then((response) => {
+        document.querySelector(".tr-loader").classList.add("d-none");
         if (response?.data === null) {
           dispatch(cargarConceptosVinculados([]));
         } else {
@@ -27,6 +30,7 @@ export default function Conceptos({ id }) {
       });
   }
   useEffect(() => {
+    dispatch(cargarConceptosVinculados([]));
     CargarConceptos();
     axios
       .get(
@@ -73,6 +77,38 @@ export default function Conceptos({ id }) {
       });
   }
 
+  function orden(e, col) {
+    e.preventDefault();
+
+    let i = col === "orden" ? 0 : 1;
+
+    if (document.querySelector(`.${col}`).innerHTML.slice(-1) === "↑") {
+      if (col === "orden") {
+        document.querySelector(`.${col}`).innerHTML = `Orden ↓`;
+      } else if (col === "descripcion") {
+        document.querySelector(`.${col}`).innerHTML = `Descripción ↓`;
+      }
+    } else {
+      if (col === "orden") {
+        document.querySelector(`.${col}`).innerHTML = `Orden ↑`;
+      } else if (col === "descripcion") {
+        document.querySelector(`.${col}`).innerHTML = `Descripción ↑`;
+      }
+    }
+
+    if (order === "ASC") {
+      const sorted = [...conceptos].sort((a, b) => (a[i] > b[i] ? 1 : -1));
+      dispatch(cargarConceptosVinculados(sorted));
+      setOrder("DESC");
+    }
+
+    if (order === "DESC") {
+      const sorted = [...conceptos].sort((a, b) => (a[i] < b[i] ? 1 : -1));
+      dispatch(cargarConceptosVinculados(sorted));
+      setOrder("ASC");
+    }
+  }
+
   return (
     <div>
       <div className="my-3 d-flex flex-direction-row">
@@ -85,11 +121,21 @@ export default function Conceptos({ id }) {
         </button>
       </div>
       <div className="tablaDocenteContainer table-responsive">
-        <table className="w-50 table-striped table-hover table-condensed">
-          <thead className="bg-transparent">
-            <tr>
-              <th className="col-1">Orden</th>
-              <th className="col">Descripción</th>
+        <table className="w-50 table-condensed table-hover table-bordered text-center table border-top border-secondary">
+          <thead className="py-5 header">
+            <tr className="bg-light" style={{ cursor: "pointer" }}>
+              <th
+                onClick={(e) => orden(e, "orden")}
+                className="col-1 orden text-nowrap"
+              >
+                Orden
+              </th>
+              <th
+                onClick={(e) => orden(e, "descripcion")}
+                className="col descripcion text-nowrap"
+              >
+                Descripción
+              </th>
               <th className="col-1">Eliminar</th>
             </tr>
           </thead>
@@ -103,7 +149,7 @@ export default function Conceptos({ id }) {
                     </div>
                   </td>
                   <td>
-                    <div className="">
+                    <div className="text-left">
                       <p className="fw-bold my-auto ml-3 align-middle text-nowrap">
                         {m[1].toUpperCase()}
                       </p>
@@ -137,8 +183,30 @@ export default function Conceptos({ id }) {
                   </td>
                 </tr>
               ))}
+            <tr>
+              <td colSpan="4">
+                <div>
+                  {conceptos === [] || !conceptos ? (
+                    <div className="footer text-center">
+                      No se registra información
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
+      </div>
+      <div id="tr-loader" className="d-none tr-loader">
+        <div colSpan="7">
+          <div
+            className="spinner-border text-primary"
+            style={{ width: "3rem", height: "3rem" }}
+            role="status"
+          ></div>
+        </div>
       </div>
     </div>
   );
