@@ -15,7 +15,7 @@ export default function Materias({ id }) {
   function CargarMaterias() {
     axios
       .get(
-        "https://www.califcolegios.wnpower.host/app/traermatvinc.php?iddocente=" +
+        "https://www.califcolegios.wnpower.host/ipsajweb/app/traermatvinc.php?iddocente=" +
           id
       )
       .then((response) => {
@@ -29,7 +29,9 @@ export default function Materias({ id }) {
   useEffect(() => {
     CargarMaterias();
     axios
-      .get("https://www.califcolegios.wnpower.host/app/combomaterias.php")
+      .get(
+        "https://www.califcolegios.wnpower.host/ipsajweb/app/combomaterias.php"
+      )
       .then((response) => {
         setComboMaterias(response?.data);
       });
@@ -38,7 +40,7 @@ export default function Materias({ id }) {
   function eliminarMateria(idmateria) {
     axios
       .post(
-        "https://www.califcolegios.wnpower.host/app/grabar_matvinc.php?iddocente=" +
+        "https://www.califcolegios.wnpower.host/ipsajweb/app/grabar_matvinc.php?iddocente=" +
           id +
           "&oper=B" +
           "&idmateria=" +
@@ -59,7 +61,7 @@ export default function Materias({ id }) {
     console.log(nombremat);
     axios
       .post(
-        "https://www.califcolegios.wnpower.host/app/grabar_matvinc.php?iddocente=" +
+        "https://www.califcolegios.wnpower.host/ipsajweb/app/grabar_matvinc.php?iddocente=" +
           id +
           "&oper=A" +
           "&idmateria=" +

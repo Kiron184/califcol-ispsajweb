@@ -15,7 +15,7 @@ export default function DocentesVinc({ id }) {
   function CargarDocentes() {
     axios
       .get(
-        "https://www.califcolegios.wnpower.host/app/traerdocvinc.php?idmateria=" +
+        "https://www.califcolegios.wnpower.host/ipsajweb/app/traerdocvinc.php?idmateria=" +
           id
       )
       .then((response) => {
@@ -29,7 +29,9 @@ export default function DocentesVinc({ id }) {
   useEffect(() => {
     CargarDocentes();
     axios
-      .get("https://www.califcolegios.wnpower.host/app/combodocentes.php")
+      .get(
+        "https://www.califcolegios.wnpower.host/ipsajweb/app/combodocentes.php"
+      )
       .then((response) => {
         setComboDocentes(response?.data);
       });
@@ -39,7 +41,7 @@ export default function DocentesVinc({ id }) {
     console.log(iddocente);
     axios
       .post(
-        "https://www.califcolegios.wnpower.host/app/grabar_docvinc.php?idmateria=" +
+        "https://www.califcolegios.wnpower.host/ipsajweb/app/grabar_docvinc.php?idmateria=" +
           id +
           "&oper=B" +
           "&iddocente=" +
@@ -60,7 +62,7 @@ export default function DocentesVinc({ id }) {
     console.log(nombredoc);
     axios
       .post(
-        "https://www.califcolegios.wnpower.host/app/grabar_matvinc.php?idmateria=" +
+        "https://www.califcolegios.wnpower.host/ipsajweb/app/grabar_matvinc.php?idmateria=" +
           id +
           "&oper=A" +
           "&iddocente=" +

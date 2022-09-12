@@ -31,7 +31,7 @@ export default function MateriasVinculadas() {
     if (id !== "0") {
       axios
         .get(
-          "https://www.califcolegios.wnpower.host/app/traerdatosmaterias.php?idmateria=" +
+          "https://www.califcolegios.wnpower.host/ipsajweb/app/traerdatosmaterias.php?idmateria=" +
             id
         )
         .then((response) => {
@@ -60,7 +60,7 @@ export default function MateriasVinculadas() {
     if (id === "0") {
       axios
         .post(
-          "https://www.califcolegios.wnpower.host/app/grabardatosmaterias.php?oper=" +
+          "https://www.califcolegios.wnpower.host/ipsajweb/app/grabardatosmaterias.php?oper=" +
             "A" +
             "&idmateria=" +
             0 +
@@ -96,7 +96,7 @@ export default function MateriasVinculadas() {
       input.idmateria = id;
       axios
         .post(
-          "https://www.califcolegios.wnpower.host/app/grabardatosmaterias.php?oper=" +
+          "https://www.califcolegios.wnpower.host/ipsajweb/app/grabardatosmaterias.php?oper=" +
             "M" +
             "&idmateria=" +
             input.idmateria +

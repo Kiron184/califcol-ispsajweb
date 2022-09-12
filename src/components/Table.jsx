@@ -18,7 +18,7 @@ export default function Table({ name, filter }) {
     if (name.length > 3 || !name) {
       axios
         .get(
-          "https://www.califcolegios.wnpower.host/app/traerdocentes.php?txnombre=" +
+          "https://www.califcolegios.wnpower.host/ipsajweb/app/traerdocentes.php?txnombre=" +
             name +
             "&filtro=" +
             filter
@@ -36,7 +36,7 @@ export default function Table({ name, filter }) {
   async function eliminarDocente(id) {
     await axios
       .post(
-        "https://www.califcolegios.wnpower.host/app/grabardatosdocentes.php?oper=" +
+        "https://www.califcolegios.wnpower.host/ipsajweb/app/grabardatosdocentes.php?oper=" +
           "B" +
           "&iddocente=" +
           id +

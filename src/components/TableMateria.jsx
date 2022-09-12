@@ -18,7 +18,7 @@ export default function TableMateria({ name, filter }) {
     if (name.length > 3 || !name) {
       axios
         .get(
-          "https://www.califcolegios.wnpower.host/app/traermaterias.php?nombre=" +
+          "https://www.califcolegios.wnpower.host/ipsajweb/app/traermaterias.php?nombre=" +
             name
         )
         .then((response) => {
@@ -34,7 +34,7 @@ export default function TableMateria({ name, filter }) {
   async function eliminarMateria(id) {
     await axios
       .post(
-        "https://www.califcolegios.wnpower.host/app/grabardatosmaterias.php?oper=" +
+        "https://www.califcolegios.wnpower.host/ipsajweb/app/grabardatosmaterias.php?oper=" +
           "B" +
           "&idmateria=" +
           id +

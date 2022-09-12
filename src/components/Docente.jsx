@@ -32,7 +32,7 @@ export default function Docente() {
     if (id !== "0") {
       axios
         .get(
-          "https://www.califcolegios.wnpower.host/app/traerdatosdocentes.php?niddocente=" +
+          "https://www.califcolegios.wnpower.host/ipsajweb/app/traerdatosdocentes.php?niddocente=" +
             id
         )
         .then((response) => {
@@ -62,7 +62,7 @@ export default function Docente() {
     if (id === "0") {
       axios
         .post(
-          "https://www.califcolegios.wnpower.host/app/grabardatosdocentes.php?oper=" +
+          "https://www.califcolegios.wnpower.host/ipsajweb/app/grabardatosdocentes.php?oper=" +
             "A" +
             "&iddocente=" +
             0 +
