@@ -7,6 +7,14 @@ const initialState = {
   conceptosVinculados: [],
   liquidaciones: [],
   liquidacionesCurso: [],
+  listaAlumnos: [],
+  listaAlumnosMarcados: [],
+  listaCursosMarcados: [],
+  aranceles: [],
+  arancel: [],
+  idCurso: 0,
+  idConcepto: 0,
+  nivelSeleccionado: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -58,6 +66,98 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         liquidacionesCurso: action.payload,
       };
+    case "CARGAR_LISTA_ALUMNOS":
+      return {
+        ...state,
+        listaAlumnos: action.payload,
+      };
+
+    case "CARGAR_ALUMNOS_MARCADOS":
+      return {
+        ...state,
+        listaAlumnosMarcados: action.payload,
+      };
+
+    case "CARGAR_CURSOS_MARCADOS":
+      return {
+        ...state,
+        listaCursosMarcados: action.payload,
+      };
+
+    case "AGREGAR_ALUMNO_MARCADO":
+      let estaAlumno = false;
+
+      state.listaAlumnosMarcados.map((a) => {
+        if (a.id === action.payload.id) {
+          estaAlumno = true;
+        }
+      });
+
+      if (!estaAlumno) {
+        return {
+          ...state,
+          listaAlumnosMarcados: [...state.listaAlumnosMarcados, action.payload],
+        };
+      } else {
+        return;
+      }
+
+    case "AGREGAR_CURSO_MARCADO":
+      let estaCurso = false;
+
+      state.listaCursosMarcados.map((a) => {
+        if (a.idcurso === action.payload.idcurso) {
+          estaCurso = true;
+        }
+      });
+
+      if (!estaCurso) {
+        return {
+          ...state,
+          listaCursosMarcados: [...state.listaCursosMarcados, action.payload],
+        };
+      } else {
+        return;
+      }
+    case "CARGAR_ARANCELES":
+      return {
+        ...state,
+        aranceles: action.payload,
+      };
+    case "CARGAR_ARANCEL":
+      return {
+        ...state,
+        arancel: action.payload,
+      };
+
+    case "CARGAR_ID_CURSO":
+      return {
+        ...state,
+        idCurso: action.payload,
+      };
+
+    case "CARGAR_ID_CONCEPTO":
+      return {
+        ...state,
+        idConcepto: action.payload,
+      };
+
+    case "CARGAR_NIVEL_SELECCIONADO":
+      let nivel = action.payload;
+
+      if (nivel[1]) {
+        return {
+          ...state,
+          nivelSeleccionado: [...state.nivelSeleccionado, nivel[0]],
+        };
+      } else {
+        return {
+          ...state,
+          nivelSeleccionado: state.nivelSeleccionado.filter(
+            (n) => n !== nivel[0]
+          ),
+        };
+      }
 
     default:
       return { ...state };

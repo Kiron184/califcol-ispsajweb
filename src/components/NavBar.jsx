@@ -82,10 +82,18 @@ export default function NavBar() {
                   Conceptos Generales
                 </NavLink>
               </li>
-              <li style={{ listStyle: "none" }}>
-                <a href="-" className="collapse-item">
+              <li
+                style={{ listStyle: "none" }}
+                onClick={(e) => {
+                  document
+                    .getElementById("adminDatos")
+                    .classList.remove("show");
+                  handleClick(e);
+                }}
+              >
+                <NavLink to="/aranceles" className="collapse-item">
                   Aranceles
-                </a>
+                </NavLink>
               </li>
               <li
                 style={{ listStyle: "none" }}

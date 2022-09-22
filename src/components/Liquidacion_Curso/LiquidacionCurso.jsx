@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import TablaLiquidacion from "./TablaLiquidacion";
 import "../../style/styles.css";
-import { useEffect } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function LiquidacionIndividual() {
+  const listaCursosMarcados = useSelector((state) => state.listaCursosMarcados);
   const [comboCiclos, setComboCiclos] = useState([]);
   const [comboCuotas, setComboCuotas] = useState([]);
 
   const [ciclo, setCiclo] = useState(2022);
   const [cuota, setCuota] = useState([0, ""]);
+  const [cargar, setCargar] = useState(Math.random());
 
   async function CargarComboCiclos() {
     await axios
@@ -44,6 +47,72 @@ export default function LiquidacionIndividual() {
       .then((response) => {
         setComboCuotas(response?.data);
       });
+  }
+
+  function liquidarTodos(e) {
+    e.preventDefault();
+    let querycreate =
+      "CREATE TEMPORARY TABLE t_datos (idcurso INT, idnivel INT) ";
+    let querylista = "INSERT INTO t_datos (idcurso, idnivel)VALUES";
+
+    if (listaCursosMarcados.length === 0) {
+      Swal.fire({
+        title: "Se debe seleccionar algún curso a liquidar",
+        icon: "error",
+        showCloseButton: true,
+      });
+    } else {
+      listaCursosMarcados.map((c) => {
+        let idnivel = c.idnivel;
+        let idcurso = c.idcurso;
+
+        if (idcurso > 0) {
+          if (querylista !== "INSERT INTO t_datos (idcurso, idnivel)VALUES") {
+            querylista = querylista + ",";
+          }
+          querylista = querylista + "(" + idcurso + "," + idnivel + ")";
+        }
+      });
+
+      axios
+        .post(
+          "https://www.califcolegios.wnpower.host/donboscocastelarweb/app/liquidacioncurso/liquidarcuotaall.php?" +
+            "ciclo=" +
+            ciclo +
+            "&idcuota=" +
+            cuota[0] +
+            "&userid=1" +
+            "&querycreate=" +
+            querycreate +
+            "&querylista=" +
+            querylista
+        )
+        .then((response) => {
+          if (response.data === "") {
+            Swal.fire({
+              title: "Se han liquidado todas las cuotas con EXITO",
+              icon: "success",
+              html: `${response.data}`,
+              showCloseButton: true,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                setCargar(Math.random());
+              }
+            });
+          } else {
+            Swal.fire({
+              title: "Error al Liquidar!",
+              icon: "error",
+              html: `${response.data}`,
+              showCloseButton: true,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                setCargar(Math.random());
+              }
+            });
+          }
+        });
+    }
   }
 
   useEffect(() => {
@@ -100,6 +169,12 @@ export default function LiquidacionIndividual() {
                   );
                 })}
             </select>
+            <button
+              className="align-self-start btn btn-primary rounded"
+              onClick={(e) => liquidarTodos(e)}
+            >
+              Liquidar Todos
+            </button>
           </div>
         </div>
       </div>
@@ -108,6 +183,7 @@ export default function LiquidacionIndividual() {
         ciclo={ciclo}
         idCuota={cuota[0]}
         nombreCuota={cuota[1]}
+        cargarTablas={cargar}
       />
     </div>
   );

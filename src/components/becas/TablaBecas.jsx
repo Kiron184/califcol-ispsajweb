@@ -92,13 +92,13 @@ export default function TablaBecas({ name, filter }) {
               onClick={(e) => orden(e, "codigo")}
               className="col-1 text-nowrap codigo"
             >
-              Código
+              Código ↑
             </th>
             <th
               onClick={(e) => orden(e, "nombre")}
               className="col-5 text-nowrap nombre"
             >
-              Nombre
+              Nombre ↑
             </th>
             <th className="col-1 text-nowrap">Editar</th>
             <th className="col-1 text-nowrap">Eliminar</th>

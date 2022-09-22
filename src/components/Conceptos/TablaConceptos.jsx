@@ -103,13 +103,13 @@ export default function TablaConceptos({ name, filter }) {
               onClick={(e) => orden(e, "descripcion")}
               className="col-5 text-nowrap descripcion"
             >
-              Descripcion
+              Descripcion ↑
             </th>
             <th
               onClick={(e) => orden(e, "tipo")}
               className="col-3 text-nowrap tipo"
             >
-              Tipo
+              Tipo ↑
             </th>
             <th className="col-1 text-nowrap">Editar</th>
             <th className="col-1 text-nowrap">Eliminar</th>

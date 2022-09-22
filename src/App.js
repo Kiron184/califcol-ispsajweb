@@ -9,6 +9,8 @@ import Becas from "./components/becas/Becas";
 import Beca from "./components/becas/Beca";
 import LiquidacionIndividual from "./components/Liquidacion_Individual/LiquidacionIndividual";
 import LiquidacionCurso from "./components/Liquidacion_Curso/LiquidacionCurso";
+import Aranceles from "./components/Aranceles/Aranceles";
+import Cuota from "./components/Aranceles/Cuota";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
             element={<LiquidacionIndividual />}
           />
           <Route path="/liquidacioncurso" element={<LiquidacionCurso />} />
+          <Route path="/aranceles" element={<Aranceles />} />
+          <Route path="/aranceles/:id/:descripcion" element={<Cuota />} />
         </Routes>
       </Container>
     </React.Fragment>

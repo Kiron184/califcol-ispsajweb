@@ -60,3 +60,73 @@ export function cargarTablaLiquidacionesCurso(liquidaciones) {
     payload: liquidaciones,
   };
 }
+
+export function cargarTablaListaAlumnos(listaAlumnos) {
+  return {
+    type: "CARGAR_LISTA_ALUMNOS",
+    payload: listaAlumnos,
+  };
+}
+
+export function cargarAlumnosMarcados(listaAlumnos) {
+  return {
+    type: "CARGAR_ALUMNOS_MARCADOS",
+    payload: listaAlumnos,
+  };
+}
+
+export function cargarCursosMarcados(listaCursos) {
+  return {
+    type: "CARGAR_CURSOS_MARCADOS",
+    payload: listaCursos,
+  };
+}
+
+export function agregarAlumnoMarcado(alumno) {
+  return {
+    type: "AGREGAR_ALUMNO_MARCADO",
+    payload: alumno,
+  };
+}
+
+export function agregarCursoMarcado(curso) {
+  return {
+    type: "AGREGAR_CURSO_MARCADO",
+    payload: curso,
+  };
+}
+
+export function cargarAranceles(aranceles) {
+  return {
+    type: "CARGAR_ARANCELES",
+    payload: aranceles,
+  };
+}
+
+export function cargarArancel(arancel) {
+  return {
+    type: "CARGAR_ARANCEL",
+    payload: arancel,
+  };
+}
+
+export function cargarIdConcepto(idConcepto) {
+  return {
+    type: "CARGAR_ID_CONCEPTO",
+    payload: idConcepto,
+  };
+}
+
+export function cargarIdCurso(idCurso) {
+  return {
+    type: "CARGAR_ID_CURSO",
+    payload: idCurso,
+  };
+}
+
+export function cargarNivelSeleccionado(nivel) {
+  return {
+    type: "CARGAR_NIVEL_SELECCIONADO",
+    payload: nivel,
+  };
+}
