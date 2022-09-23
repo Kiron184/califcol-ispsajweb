@@ -91,37 +91,43 @@ export default function Cuota() {
     if (idCurso === 0 && idConcepto === 0) {
       idc = 0;
     }
-    axios
-      .get(
-        "https://www.califcolegios.wnpower.host/donboscocastelarweb/app/aranceles/cursosalumnos.php?idcuota=" +
-          idc +
-          "&idcurso=" +
-          idCurso +
-          "&idconcepto=" +
-          idConcepto
-      )
-      .then((response) => {
-        setCursosAlumnos(response?.data);
-      });
+
+    if (idConcepto === 0 || idConcepto === "0") {
+      setCursosAlumnos([]);
+    } else {
+      axios
+        .get(
+          "https://www.califcolegios.wnpower.host/donboscocastelarweb/app/aranceles/cursosalumnos.php?idcuota=" +
+            idc +
+            "&idcurso=" +
+            idCurso +
+            "&idconcepto=" +
+            idConcepto
+        )
+        .then((response) => {
+          setCursosAlumnos(response?.data);
+        });
+    }
   }
 
   function traerNivelCuotas(ciclo) {
-    axios
-      .get(
-        "https://www.califcolegios.wnpower.host/donboscocastelarweb/app/aranceles/traernivelcuotas.php?idcuota=" +
-          id +
-          "&ciclo=" +
-          ciclo
-      )
-      .then((response) => {
-        setNivel(response.data);
-        response.data.map((n) => {
-          if (n.marca === "1") {
-            dispatch(cargarNivelSeleccionado([n.idnivel, true]));
-            traerCursosCuotas(ciclo, n.idnivel);
-          }
+    if (nivelSeleccionado.length === 0) {
+      axios
+        .get(
+          "https://www.califcolegios.wnpower.host/donboscocastelarweb/app/aranceles/traernivelcuotas.php?idcuota=" +
+            id +
+            "&ciclo=" +
+            ciclo
+        )
+        .then((response) => {
+          setNivel(response.data);
+          response.data.map((n) => {
+            if (n.marca === "1") {
+              dispatch(cargarNivelSeleccionado([n.idnivel, true]));
+            }
+          });
         });
-      });
+    }
   }
 
   function marcarDesmarcarCursos(nivel) {
@@ -130,31 +136,65 @@ export default function Cuota() {
     } else {
       dispatch(cargarNivelSeleccionado([nivel, true]));
     }
-
-    traerCursosCuotas(input.ciclo);
   }
 
   function traerCursosCuotas(ciclo) {
     let querycreate = "CREATE TEMPORARY TABLE t_datos (idnivel INT) ";
     let querylista = "INSERT INTO t_datos (idnivel)VALUES";
 
-    if (nivelSeleccionado.length !== 0) {
-      axios
-        .get(
-          "https://www.califcolegios.wnpower.host/donboscocastelarweb/app/aranceles/traercursocuotas.php?idcuota=" +
-            id +
-            "&ciclo=" +
-            ciclo +
-            "&querycreate=" +
-            querycreate +
-            "&querylista=" +
-            querylista +
-            `(${nivelSeleccionado[0]})`
-        )
-        .then((response) => {
-          setCursos(response.data);
-        });
+    let true1 = false;
+    let true2 = false;
+    let true3 = false;
+
+    if (
+      !document.getElementById(`check1`).checked &&
+      !document.getElementById(`check2`).checked &&
+      !document.getElementById(`check3`).checked
+    ) {
+      querylista = querylista + " (0)";
     }
+
+    nivelSeleccionado.map((n) => {
+      if (n === "1") {
+        true1 = true;
+      }
+      if (n === "2") {
+        true2 = true;
+      }
+      if (n === "3") {
+        true3 = true;
+      }
+    });
+
+    if (true1 && document.getElementById(`check1`).checked) {
+      querylista = querylista + "(1),";
+    }
+    if (true2 && document.getElementById(`check2`).checked) {
+      querylista = querylista + "(2),";
+    }
+    if (true3 && document.getElementById(`check3`).checked) {
+      querylista = querylista + "(3),";
+    }
+
+    if (querylista[querylista.length - 1] === ",") {
+      querylista = querylista.substring(0, querylista.length - 1);
+    }
+    console.log(querylista);
+    axios
+      .get(
+        "https://www.califcolegios.wnpower.host/donboscocastelarweb/app/aranceles/traercursocuotas.php?idcuota=" +
+          id +
+          "&ciclo=" +
+          ciclo +
+          "&querycreate=" +
+          querycreate +
+          "&querylista=" +
+          querylista
+      )
+      .then((response) => {
+        console.log(response.data);
+        setCursos(response.data);
+      });
   }
 
   function traerConceptosVinculados() {
@@ -201,9 +241,10 @@ export default function Cuota() {
             ciclo: response.data[0].ciclo,
           });
           traerNivelCuotas(response.data[0].ciclo);
+          traerCursosCuotas(response.data[0].ciclo);
         });
     }
-  }, [dispatch, idConcepto, idCurso]);
+  }, [dispatch, idConcepto, idCurso, nivelSeleccionado]);
 
   function editarArancel(e) {
     e.preventDefault();
@@ -627,7 +668,9 @@ export default function Cuota() {
                 nivel.map((n) => (
                   <div className="d-flex flex-row">
                     <input
-                      onChange={(e) => marcarDesmarcarCursos(n.idnivel)}
+                      onChange={(e) => {
+                        marcarDesmarcarCursos(n.idnivel);
+                      }}
                       defaultChecked={n.marca === "1" ? true : false}
                       className="mr-1"
                       id={`check${n.idnivel}`}
@@ -664,6 +707,17 @@ export default function Cuota() {
                         </td>
                       </tr>
                     ))}
+                  <td colSpan="4">
+                    <div>
+                      {cursos === [] || !cursos || cursos.length === 0 ? (
+                        <div className="footer text-center">
+                          No se registra información
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </td>
                 </tbody>
               </table>
             </div>
