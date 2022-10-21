@@ -120,28 +120,28 @@ export default function TablaBecas({ name, filter }) {
                   navigation(`/becas/${b[1]}`);
                 }}
               >
-                <td className="align-middle">
+                <td className="align-middle py-0">
                   <div className="">
                     <p
                       style={{ fontSize: "13px" }}
-                      className="fw-bold text-nowrap "
+                      className="fw-bold mb-0 text-nowrap "
                     >
                       {b[1]}
                     </p>
                   </div>
                 </td>
-                <td className="text-left">
+                <td className="text-left align-middle py-0">
                   <div className="">
                     <p
                       style={{ fontSize: "13px" }}
-                      className="fw-bold text-nowrap "
+                      className="fw-bold mb-0 text-nowrap "
                     >
                       {b[0]}
                     </p>
                   </div>
                 </td>
 
-                <td className="align-middle">
+                <td className="align-middle mb-0 py-0">
                   <NavLink
                     to={"/becas/" + b[1]}
                     type="button"
@@ -160,7 +160,7 @@ export default function TablaBecas({ name, filter }) {
                     <img width="20px" alt="edit" src={edit} />
                   </NavLink>
                 </td>
-                <td className="">
+                <td className="align-middle mb-0 py-0">
                   <button
                     className="btn"
                     onClick={(e) => {

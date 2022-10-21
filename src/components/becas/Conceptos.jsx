@@ -110,11 +110,11 @@ export default function Conceptos({ id }) {
   }
 
   return (
-    <div>
+    <div style={{ fontSize: "13px" }}>
       <div className="my-3 d-flex flex-direction-row">
         <div>{parse(`${comboConcepto}`)}</div>
         <button
-          className="btn btn-primary mx-4"
+          className="btn btn-sm btn-primary mx-4"
           onClick={(e) => agregarConcepto(e)}
         >
           AGREGAR

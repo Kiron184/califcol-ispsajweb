@@ -5,7 +5,7 @@ import "../../style/styles.css";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-export default function LiquidacionIndividual() {
+export default function LiquidacionCurso() {
   const listaCursosMarcados = useSelector((state) => state.listaCursosMarcados);
   const [comboCiclos, setComboCiclos] = useState([]);
   const [comboCuotas, setComboCuotas] = useState([]);

@@ -130,3 +130,52 @@ export function cargarNivelSeleccionado(nivel) {
     payload: nivel,
   };
 }
+
+export function cargarIdConceptoAlumnos(idConcepto) {
+  return {
+    type: "CARGAR_ID_CONCEPTO_ALUMNOS",
+    payload: idConcepto,
+  };
+}
+
+export function cargarCodificadores(codificadores) {
+  return {
+    type: "CARGAR_CODIFICADORES",
+    payload: codificadores,
+  };
+}
+
+export function borrarCodificador(id) {
+  return {
+    type: "BORRAR_CODIFICADOR",
+    payload: id,
+  };
+}
+
+export function cargarCodificador(codificador) {
+  return {
+    type: "CARGAR_CODIFICADOR",
+    payload: codificador,
+  };
+}
+
+export function cargarUsuarios(usuarios) {
+  return {
+    type: "CARGAR_USUARIOS",
+    payload: usuarios,
+  };
+}
+
+export function borrarUsuario(id) {
+  return {
+    type: "BORRAR_USUARIO",
+    payload: id,
+  };
+}
+
+export function cargarUsuario(usuario) {
+  return {
+    type: "CARGAR_USUARIO",
+    payload: usuario,
+  };
+}

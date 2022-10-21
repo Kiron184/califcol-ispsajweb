@@ -93,13 +93,16 @@
   }
 
   .table td{
-    padding: 5px !important;
+    padding: 5px;
   }
 
   .table tr:nth-child(even) {
     background-color: #f8f8f8;
   }
 
+  .yellow{
+    background-color: rgb(255, 255, 147)!important;
+  }
   #tr-loader {
     position: absolute; 
     top:50%;
@@ -128,7 +131,7 @@
     .collapse-menu{
         background-color: transparent;
 
-    }   
+    } 
 
   }
 

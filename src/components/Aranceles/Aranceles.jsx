@@ -4,7 +4,7 @@ import "../../style/styles.css";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 
-export default function LiquidacionIndividual() {
+export default function Aranceles() {
   const [comboCiclos, setComboCiclos] = useState([]);
   const [ciclo, setCiclo] = useState(2022);
   const [mes, setMes] = useState(0);
@@ -34,7 +34,7 @@ export default function LiquidacionIndividual() {
   }, [ciclo, mes]);
 
   return (
-    <div className="px-3 pt-2 pb-5 px-lg-5 mx-lg-5 pb-lg-0">
+    <div className="px-3 pt-3 pb-5 px-lg-5 mx-lg-5 pb-lg-0">
       <div className="pt-5">
         <div>
           <h4 className="">Aranceles</h4>
@@ -81,7 +81,7 @@ export default function LiquidacionIndividual() {
           </select>
           <NavLink
             className="align-self-start btn btn-primary rounded"
-            to="/aranceles/0/0"
+            to={`/aranceles/0/0/${ciclo}`}
             onClick={(e) => {
               document.querySelector(".navbar").classList.remove("active-nav");
               document

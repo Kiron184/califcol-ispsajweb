@@ -15,6 +15,11 @@ const initialState = {
   idCurso: 0,
   idConcepto: 0,
   nivelSeleccionado: [],
+  idConceptoAlumnos: 0,
+  codificadores: [],
+  codificador: [],
+  usuarios: [],
+  usuario: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -144,7 +149,6 @@ export default function rootReducer(state = initialState, action) {
 
     case "CARGAR_NIVEL_SELECCIONADO":
       let nivel = action.payload;
-
       if (nivel[1]) {
         return {
           ...state,
@@ -159,6 +163,47 @@ export default function rootReducer(state = initialState, action) {
         };
       }
 
+    case "CARGAR_ID_CONCEPTO_ALUMNOS":
+      return {
+        ...state,
+        idConceptoAlumnos: action.payload,
+      };
+
+    case "CARGAR_CODIFICADORES":
+      return {
+        ...state,
+        codificadores: action.payload,
+      };
+    case "BORRAR_CODIFICADOR":
+      return {
+        ...state,
+        codificadores: state.codificadores.filter(
+          (u) => u.id !== action.payload
+        ),
+      };
+
+    case "CARGAR_CODIFICADOR":
+      return {
+        ...state,
+        codificador: action.payload,
+      };
+
+    case "CARGAR_USUARIOS":
+      return {
+        ...state,
+        usuarios: action.payload,
+      };
+    case "BORRAR_USUARIO":
+      return {
+        ...state,
+        usuario: state.codificadores.filter((u) => u.id !== action.payload),
+      };
+
+    case "CARGAR_USUARIO":
+      return {
+        ...state,
+        usuario: action.payload,
+      };
     default:
       return { ...state };
   }

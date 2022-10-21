@@ -3,12 +3,12 @@ import { NavLink } from "react-router-dom";
 import TablaBecas from "./TablaBecas";
 import "../../style/styles.css";
 
-export default function ConceptosGenerales() {
+export default function Becas() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState(0);
 
   return (
-    <div className="px-3 pt-2 pb-5 px-lg-5 mx-lg-5 pb-lg-0">
+    <div className="px-3 pt-3 pb-5 px-lg-5 mx-lg-5 pb-lg-0">
       <div className="pt-5">
         <div>
           <h4 className="">Becas</h4>

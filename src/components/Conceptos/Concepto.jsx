@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { cargarConcepto } from "../../actions";
 import { useSelector } from "react-redux/es/exports";
 
-export default function Docente() {
+export default function Concepto() {
   const { id } = useParams();
   const navigation = useNavigate();
 

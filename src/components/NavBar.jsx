@@ -64,10 +64,18 @@ export default function NavBar() {
                   Cursos
                 </a>
               </li>
-              <li style={{ listStyle: "none" }}>
-                <a href="-" className="collapse-item">
+              <li
+                style={{ listStyle: "none" }}
+                onClick={(e) => {
+                  document
+                    .getElementById("adminDatos")
+                    .classList.remove("show");
+                  handleClick(e);
+                }}
+              >
+                <NavLink to="/codificadores" className="collapse-item">
                   Codificadores
-                </a>
+                </NavLink>
               </li>
               <li
                 style={{ listStyle: "none" }}
@@ -113,10 +121,18 @@ export default function NavBar() {
                   Inscripción Alumnos
                 </a>
               </li>
-              <li style={{ listStyle: "none" }}>
-                <a href="-" className="collapse-item">
+              <li
+                style={{ listStyle: "none" }}
+                onClick={(e) => {
+                  document
+                    .getElementById("adminDatos")
+                    .classList.remove("show");
+                  handleClick(e);
+                }}
+              >
+                <NavLink to="/usuarios" className="collapse-item">
                   Usuarios
-                </a>
+                </NavLink>
               </li>
               <li style={{ listStyle: "none" }}>
                 <a href="-" className="collapse-item">

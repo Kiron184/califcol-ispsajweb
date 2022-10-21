@@ -9,7 +9,7 @@ import { cargarBeca } from "../../actions";
 import { useSelector } from "react-redux/es/exports";
 import Conceptos from "./Conceptos";
 
-export default function Docente() {
+export default function Beca() {
   const { id } = useParams();
   const navigation = useNavigate();
 
@@ -108,9 +108,9 @@ export default function Docente() {
       <div className="pr-5 pt-3 pl-3 pl-lg-5 ml-lg-5 contenedor">
         <div className="pt-5">
           <div>
-            <h4 className="">BECAS</h4>
+            <h4 className="">Becas</h4>
             <p className="text-secondary">
-              Crear y gestionar los datos de las Becas
+              Crear y gestionar los datos de las Becas.
             </p>
           </div>
           <hr className="w-100 mx-0" />
@@ -188,7 +188,7 @@ export default function Docente() {
             aria-labelledby="datos-tab"
           >
             {/* DATOS BASICOS */}
-            <div className="w-100 mt-3">
+            <div style={{ fontSize: "13px" }} className="w-100 mt-3">
               <form
                 name="f_abm_docentes"
                 id="id_abm_docentes"
@@ -198,7 +198,7 @@ export default function Docente() {
                 <div className="form-group row align-items-center">
                   <label
                     htmlFor="nombre"
-                    className="col-sm-2 control-label text-label h6"
+                    className="col-sm-2 control-label text-label"
                   >
                     Nombre
                   </label>
@@ -206,7 +206,7 @@ export default function Docente() {
                     <input
                       required
                       type="text"
-                      className="form-control"
+                      className="form-control form-control-sm"
                       id="nombre"
                       name={"nombre"}
                       value={input.nombre}
@@ -219,14 +219,14 @@ export default function Docente() {
                 <div className="form-group row align-items-center">
                   <label
                     htmlFor="tipo"
-                    className="col-sm-2 control-label text-label h6"
+                    className="col-sm-2 control-label text-label"
                   >
                     Tipo
                   </label>
                   <div className="col-sm-4 col-lg-3">
                     <select
                       required
-                      className="form-control"
+                      className="form-control form-control-sm"
                       id="tipo"
                       name={"tipo"}
                       value={input.tipo}
@@ -242,7 +242,7 @@ export default function Docente() {
                 <div className="form-group row align-items-center">
                   <label
                     htmlFor="valor"
-                    className="col-sm-2 control-label text-label h6"
+                    className="col-sm-2 control-label text-label"
                   >
                     Valor
                   </label>
@@ -250,7 +250,7 @@ export default function Docente() {
                     <input
                       required
                       type="text"
-                      className="form-control"
+                      className="form-control form-control-sm"
                       id="valor"
                       name={"valor"}
                       value={input.valor}

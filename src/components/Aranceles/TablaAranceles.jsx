@@ -4,11 +4,12 @@ import axios from "axios";
 import "../../style/styles.css";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux/es/exports";
-import { cargarAranceles } from "../../actions";
+import { cargarAranceles, cargarIdConceptoAlumnos } from "../../actions";
 import edit from "../../utils/edit.png";
 import trash from "../../utils/delete.png";
+import Swal from "sweetalert2";
 
-export default function TablaBecas({ ciclo, mes }) {
+export default function TablaAranceles({ ciclo, mes }) {
   const dispatch = useDispatch();
   const navigation = useNavigate();
   const aranceles = useSelector((state) => state.aranceles);
@@ -23,7 +24,6 @@ export default function TablaBecas({ ciclo, mes }) {
       )
       .then((response) => {
         document.querySelector(".tr-loader").classList.add("d-none");
-        console.log(mes);
         if (mes === "0" || !mes) {
           return dispatch(cargarAranceles(response.data));
         } else {
@@ -38,6 +38,7 @@ export default function TablaBecas({ ciclo, mes }) {
   useEffect(() => {
     dispatch(cargarAranceles([]));
     cargarTabla();
+    dispatch(cargarIdConceptoAlumnos(0));
   }, [ciclo, mes]);
 
   function orden(e, col) {
@@ -104,6 +105,68 @@ export default function TablaBecas({ ciclo, mes }) {
     }
   }
 
+  function clonarCuota(idcuota, descripcion) {
+    Swal.fire({
+      title: `Esta seguro que desea clonar el Arancel ${descripcion}?`,
+      icon: "question",
+      showCloseButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .get(
+            "https://www.califcolegios.wnpower.host/donboscocastelarweb/app/aranceles/clonarcuota.php?&idcuota=" +
+              idcuota
+          )
+          .then((response) => {
+            console.log(response.data);
+          });
+        navigation("/aranceles");
+      } else {
+        navigation("/aranceles");
+      }
+    });
+  }
+
+  function eliminarCuota(idcuota, descripcion) {
+    Swal.fire({
+      title: "",
+      icon: "question",
+      html: `Esta seguro que desea eliminar el Arancel ${descripcion}? <br> <br>
+      Si se confirma se dejará de visualizar en todas las opciones que se encuentre vinculado.`,
+      showCloseButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .get(
+            "https://www.califcolegios.wnpower.host/donboscocastelarweb/app/aranceles/grabardatoscuotas.php?oper=" +
+              "B" +
+              "&idcuota=" +
+              idcuota +
+              "&ciclo=0" +
+              "&descripcion= " +
+              "&sel_tipo=0" +
+              "&fecha1=0000/00/00" +
+              "&fecha2=0000/00/00" +
+              "&importe1=0" +
+              "&importe2=0" +
+              "&sel_mes=0" +
+              "&recargo=0" +
+              "&querycreatenivel=" +
+              "&querylistanivel=" +
+              "&querycreatecurso=" +
+              "&querylistacurso=" +
+              "&userid=83"
+          )
+          .then((response) => {
+            console.log(response.data[0].msg_error);
+          });
+        navigation("/aranceles");
+      } else {
+        navigation("/aranceles");
+      }
+    });
+  }
+
   return (
     <div style={{ height: "900px" }} className="table-responsive">
       <table className="w-100 table-condensed table-hover table-bordered text-center table border-top border-secondary">
@@ -111,7 +174,7 @@ export default function TablaBecas({ ciclo, mes }) {
           <tr className="bg-light" style={{ cursor: "pointer" }}>
             <th
               onClick={(e) => orden(e, "descripcion")}
-              className="col-3 descripcion"
+              className="col-4 descripcion"
             >
               Descripción ↑
             </th>
@@ -158,80 +221,70 @@ export default function TablaBecas({ ciclo, mes }) {
                     .querySelector(".contenedor")
                     .classList.remove("active-contenedor");
                   navigation(
-                    `/aranceles/${a.idcuota}/${a.descripcion.split("/")}`
+                    `/aranceles/${a.idcuota}/${a.descripcion.split(
+                      "/"
+                    )}/${ciclo}`
                   );
                 }}
               >
-                <td className="text-left">
-                  <div className="">
-                    <p style={{ fontSize: "13px" }} className="fw-bold ">
-                      {a.descripcion}
-                    </p>
-                  </div>
+                <td className="text-left align-middle py-0">
+                  <p style={{ fontSize: "13px" }} className="fw-bold mb-0">
+                    {a.descripcion}
+                  </p>
                 </td>
                 <td className="align-middle">
-                  <div className="">
-                    <p
-                      style={{ fontSize: "13px" }}
-                      className="fw-bold text-nowrap "
-                    >
-                      {a.tipo}
-                    </p>
-                  </div>
+                  <p
+                    style={{ fontSize: "13px" }}
+                    className="fw-bold text-nowrap mb-0"
+                  >
+                    {a.tipo}
+                  </p>
+                </td>
+                <td className="align-middle ">
+                  <p
+                    style={{ fontSize: "13px" }}
+                    className="fw-bold text-nowrap mb-0"
+                  >
+                    {a.fecha1}
+                  </p>
                 </td>
                 <td className="align-middle">
-                  <div className="">
-                    <p
-                      style={{ fontSize: "13px" }}
-                      className="fw-bold text-nowrap "
-                    >
-                      {a.fecha1}
-                    </p>
-                  </div>
+                  <p
+                    style={{ fontSize: "13px" }}
+                    className="fw-bold text-nowrap text-right mb-0"
+                  >
+                    {a.importe1}
+                  </p>
                 </td>
                 <td className="align-middle">
-                  <div className="">
-                    <p
-                      style={{ fontSize: "13px" }}
-                      className="fw-bold text-nowrap "
-                    >
-                      {a.importe1}
-                    </p>
-                  </div>
+                  <p
+                    style={{ fontSize: "13px" }}
+                    className="fw-bold text-nowrap mb-0"
+                  >
+                    {a.fecha2}
+                  </p>
                 </td>
                 <td className="align-middle">
-                  <div className="">
-                    <p
-                      style={{ fontSize: "13px" }}
-                      className="fw-bold text-nowrap "
-                    >
-                      {a.fecha2}
-                    </p>
-                  </div>
+                  <p
+                    style={{ fontSize: "13px" }}
+                    className="fw-bold text-nowrap text-right mb-0"
+                  >
+                    {a.importe2}
+                  </p>
                 </td>
                 <td className="align-middle">
-                  <div className="">
-                    <p
-                      style={{ fontSize: "13px" }}
-                      className="fw-bold text-nowrap "
-                    >
-                      {a.importe2}
-                    </p>
-                  </div>
-                </td>
-                <td className="align-middle">
-                  <div className="">
-                    <p
-                      style={{ fontSize: "13px" }}
-                      className="fw-bold text-nowrap "
-                    >
-                      {a.arancel}
-                    </p>
-                  </div>
+                  <p
+                    style={{ fontSize: "13px" }}
+                    className="fw-bold text-nowrap text-right mb-0"
+                  >
+                    {a.arancel}
+                  </p>
                 </td>
                 <td className="align-middle">
                   <NavLink
-                    to={`/aranceles/${a.idcuota}/${a.descripcion.split("/")}`}
+                    to={`/aranceles/${a.idcuota}/${a.descripcion.split(
+                      "/"
+                    )}/${ciclo}`}
                     type="button"
                     className="p-0 btn"
                     id={a.idcuota}
@@ -263,7 +316,7 @@ export default function TablaBecas({ ciclo, mes }) {
                       document
                         .querySelector(".contenedor")
                         .classList.remove("active-contenedor");
-                      navigation(`/aranceles/${a.idcuota}/${a.descripcion}`);
+                      clonarCuota(a.idcuota, a.descripcion);
                     }}
                   >
                     Clonar
@@ -271,7 +324,7 @@ export default function TablaBecas({ ciclo, mes }) {
                 </td>
                 <td className="align-middle">
                   <NavLink
-                    to={`/aranceles/${a.idcuota}/${a.descripcion}`}
+                    to={`/aranceles/${a.idcuota}/${a.descripcion}/${ciclo}`}
                     type="button"
                     className="p-0 btn"
                     id={a.idcuota}
@@ -283,6 +336,7 @@ export default function TablaBecas({ ciclo, mes }) {
                       document
                         .querySelector(".contenedor")
                         .classList.remove("active-contenedor");
+                      eliminarCuota(a.idcuota, a.descripcion);
                     }}
                   >
                     <img width="20px" alt="edit" src={trash} />

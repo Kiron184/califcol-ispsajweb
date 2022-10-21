@@ -11,6 +11,10 @@ import LiquidacionIndividual from "./components/Liquidacion_Individual/Liquidaci
 import LiquidacionCurso from "./components/Liquidacion_Curso/LiquidacionCurso";
 import Aranceles from "./components/Aranceles/Aranceles";
 import Cuota from "./components/Aranceles/Cuota";
+import Codificadores from "./components/Codificadores/Codificadores";
+import Codificador from "./components/Codificadores/Codificador";
+import Usuarios from "./components/Usuarios/Usuarios";
+import Usuario from "./components/Usuarios/Usuario";
 
 function App() {
   return (
@@ -28,7 +32,17 @@ function App() {
           />
           <Route path="/liquidacioncurso" element={<LiquidacionCurso />} />
           <Route path="/aranceles" element={<Aranceles />} />
-          <Route path="/aranceles/:id/:descripcion" element={<Cuota />} />
+          <Route
+            path="/aranceles/:id/:descripcion/:ciclo"
+            element={<Cuota />}
+          />
+          <Route path="/codificadores" element={<Codificadores />} />
+          <Route
+            path="/codificadores/:id/:idcodificador"
+            element={<Codificador />}
+          />
+          <Route path="/usuarios" element={<Usuarios />} />
+          <Route path="/usuarios/:id" element={<Usuario />} />
         </Routes>
       </Container>
     </React.Fragment>
