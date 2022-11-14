@@ -771,7 +771,6 @@ export default function Cuota() {
     }
   }, [dispatch, idConcepto, idCurso, nivelSeleccionado, idConceptoAlumnos]);
 
-  console.log(input);
   return (
     <React.Fragment>
       <div className="pr-5 pt-3 pl-3 pl-lg-5 ml-lg-5 contenedor">
@@ -785,7 +784,10 @@ export default function Cuota() {
           <hr className="w-100 mx-0" />
           <div className="d-flex justify-content-between w-100">
             <h4>
-              Informacion del Arancel {descripcion !== "0" ? descripcion : ""}
+              Informacion del Arancel{" "}
+              <span className="text-secondary">
+                {descripcion !== "0" ? descripcion : ""}
+              </span>
               <strong className="ml-3 text-primary font-weight-normal">
                 {input.nombre}
               </strong>
@@ -807,7 +809,7 @@ export default function Cuota() {
               >
                 {" "}
                 <img width="20px" src={arrowLeft} alt="arrow-left" />
-                Listado
+                Listado de aranceles
               </button>
             </div>
           </div>
@@ -900,7 +902,7 @@ export default function Cuota() {
             aria-labelledby="datos-tab"
           >
             {/* DATOS BASICOS */}
-            <div className="w-100 mt-3 ml-2">
+            <div className="w-75 mt-3 ml-2">
               <form
                 name="f_abm_cuotas"
                 id="id_abm_cuotas"
@@ -1168,7 +1170,7 @@ export default function Cuota() {
             role="tabpanel"
             aria-labelledby="tablas-tab"
           >
-            <div className="my-2">
+            <div className="my-2 w-75">
               {nivel &&
                 nivel.map((n) => (
                   <div className="d-flex flex-row">

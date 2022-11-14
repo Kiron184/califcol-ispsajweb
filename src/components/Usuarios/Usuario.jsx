@@ -141,9 +141,9 @@ export default function Usuario() {
           <div className="d-flex justify-content-between w-100">
             <h4>
               Informacion del Usuario{" "}
-              <strong style={{ fontWeight: "500" }} className="text-secondary">
+              <span style={{ fontWeight: "500" }} className="text-secondary">
                 {input.nombres + " " + input.apellido}
-              </strong>
+              </span>
             </h4>
             <div>
               <button
@@ -197,7 +197,7 @@ export default function Usuario() {
             aria-labelledby="datos-tab"
           >
             {/* DATOS BASICOS */}
-            <div style={{ fontSize: "13px" }} className="w-100 mt-3 ml-2">
+            <div style={{ fontSize: "13px" }} className="w-75 mt-3 ml-2">
               <form
                 name="f_abm_docentes"
                 id="id_abm_docentes"

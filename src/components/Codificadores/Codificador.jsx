@@ -202,7 +202,7 @@ export default function Codificador() {
             aria-labelledby="datos-tab"
           >
             {/* DATOS BASICOS */}
-            <div style={{ fontSize: "13px" }} className="w-100 mt-3 ml-2">
+            <div style={{ fontSize: "13px" }} className="w-75 mt-3 ml-2">
               <form
                 name="f_abm_docentes"
                 id="id_abm_docentes"

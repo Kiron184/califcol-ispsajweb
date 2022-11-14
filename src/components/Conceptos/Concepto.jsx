@@ -144,16 +144,16 @@ export default function Concepto() {
       <div className="pr-5 pt-3 pl-3 pl-lg-5 ml-lg-5 contenedor">
         <div className="pt-5">
           <div>
-            <h4 className="">CONCEPTOS GENERALES</h4>
+            <h4 className="">Conceptos Generales</h4>
             <p className="text-secondary">
-              Crear y gestionar los datos de los Conceptos Generales
+              Crear y gestionar los datos de los conceptos generales.
             </p>
           </div>
           <hr className="w-100 mx-0" />
           <div className="d-flex justify-content-between w-100">
             <h4>
               Informacion del Concepto {"  "}
-              <strong className="ml-3 text-secondary font-weight-normal">
+              <strong style={{ fontWeight: "500" }} className="text-secondary">
                 {input.descrip}
               </strong>
             </h4>
@@ -211,7 +211,7 @@ export default function Concepto() {
             aria-labelledby="datos-tab"
           >
             {/* DATOS BASICOS */}
-            <div className="w-100 mt-3">
+            <div style={{ fontSize: "13px" }} className="w-75 mt-3 ml-2">
               <form
                 name="f_abm_docentes"
                 id="id_abm_docentes"
@@ -221,7 +221,7 @@ export default function Concepto() {
                 <div className="form-group row align-items-center">
                   <label
                     htmlFor="descrip"
-                    className="col-sm-2 control-label text-label h6"
+                    className="col-sm-2 control-label text-label"
                   >
                     Descripción
                   </label>
@@ -229,7 +229,7 @@ export default function Concepto() {
                     <input
                       required
                       type="text"
-                      className="form-control"
+                      className="form-control form-control-sm"
                       id="descrip"
                       name={"descrip"}
                       value={input.descrip}
@@ -244,14 +244,14 @@ export default function Concepto() {
                 <div className="form-group row align-items-center">
                   <label
                     htmlFor="idtipo"
-                    className="col-sm-2 control-label text-label h6"
+                    className="col-sm-2 control-label text-label"
                   >
                     Tipo
                   </label>
                   <div className="col-sm-4 col-lg-3">
                     <select
                       required
-                      className="form-control"
+                      className="form-control form-control-sm"
                       id="idtipo"
                       name={"idtipo"}
                       value={input.idtipo}
@@ -270,7 +270,7 @@ export default function Concepto() {
                 <div className="form-group row align-items-center">
                   <label
                     htmlFor="habilitado"
-                    className="col-sm-2 control-label text-label h6"
+                    className="col-sm-2 control-label text-label"
                   >
                     Habilitado
                   </label>

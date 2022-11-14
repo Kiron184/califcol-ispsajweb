@@ -23,7 +23,6 @@ export default function TablaUsuarios({ name }) {
           name
       )
       .then((response) => {
-        console.log(response.data);
         document.querySelector(".tr-loader").classList.add("d-none");
         return dispatch(cargarUsuarios(response.data));
       });
@@ -61,13 +60,21 @@ export default function TablaUsuarios({ name }) {
       if (col === "nombre") {
         document.querySelector(`.${col}`).innerHTML = `Nombre ↓`;
       } else if (col === "nivel") {
-        document.querySelector(`.${col}`).innerHTML = `Nivel ↓`;
+        document.querySelector(`.${col}`).innerHTML = `Perfil ↓`;
+      } else if (col === "email") {
+        document.querySelector(`.${col}`).innerHTML = `Email ↓`;
+      } else if (col === "docnro") {
+        document.querySelector(`.${col}`).innerHTML = `Documento ↓`;
       }
     } else {
       if (col === "nombre") {
         document.querySelector(`.${col}`).innerHTML = `Nombre ↑`;
       } else if (col === "nivel") {
-        document.querySelector(`.${col}`).innerHTML = `Nivel ↑`;
+        document.querySelector(`.${col}`).innerHTML = `Perfil ↑`;
+      } else if (col === "email") {
+        document.querySelector(`.${col}`).innerHTML = `Email ↑`;
+      } else if (col === "docnro") {
+        document.querySelector(`.${col}`).innerHTML = `Documento ↑`;
       }
     }
 
@@ -94,15 +101,27 @@ export default function TablaUsuarios({ name }) {
           <tr className="bg-light" style={{ cursor: "pointer" }}>
             <th
               onClick={(e) => orden(e, "nombre")}
-              className="col-1 text-nowrap nombre"
+              className="col-2 text-nowrap nombre"
             >
               Nombre ↑
             </th>
             <th
-              onClick={(e) => orden(e, "nivel")}
-              className="col-3 text-nowrap nivel"
+              onClick={(e) => orden(e, "email")}
+              className="col-4 text-nowrap email"
             >
-              Nivel ↑
+              Email ↑
+            </th>
+            <th
+              onClick={(e) => orden(e, "nivel")}
+              className="col-2 text-nowrap nivel"
+            >
+              Perfil ↑
+            </th>
+            <th
+              onClick={(e) => orden(e, "docnro")}
+              className="col-2 text-nowrap docnro"
+            >
+              Documento ↑
             </th>
             <th className="col-1 text-nowrap">Editar</th>
             <th className="col-1 text-nowrap">Eliminar</th>
@@ -128,7 +147,13 @@ export default function TablaUsuarios({ name }) {
                   <p className="fw-bold text-nowrap m-0">{u.nombre}</p>
                 </td>
                 <td className="text-left align-middle m-0 py-0">
+                  <p className="fw-bold text-nowrap m-0">{u.email}</p>
+                </td>
+                <td className="text-left align-middle m-0 py-0">
                   <p className="fw-bold text-nowrap m-0">{u.nivel}</p>
+                </td>
+                <td className="text-center align-middle m-0 py-0">
+                  <p className="fw-bold text-nowrap m-0">{u.docnro}</p>
                 </td>
 
                 <td className="align-middle align-middle m-0 py-0">

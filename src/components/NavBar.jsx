@@ -5,10 +5,8 @@ import profile from "../utils/user.png";
 import help from "../utils/help.png";
 import "../style/styles.css";
 import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 export default function NavBar() {
-  const dispatch = useDispatch();
   if (window.location.href !== "/" && document.querySelector(".navbar")) {
     document.querySelector(".navbar").classList.remove("active-nav");
   }
@@ -134,10 +132,18 @@ export default function NavBar() {
                   Usuarios
                 </NavLink>
               </li>
-              <li style={{ listStyle: "none" }}>
-                <a href="-" className="collapse-item">
+              <li
+                style={{ listStyle: "none" }}
+                onClick={(e) => {
+                  document
+                    .getElementById("adminDatos")
+                    .classList.remove("show");
+                  handleClick(e);
+                }}
+              >
+                <NavLink to="/parametros" className="collapse-item">
                   Parámetros
-                </a>
+                </NavLink>
               </li>
               <li style={{ listStyle: "none" }}>
                 <a href="-" className="collapse-item">
@@ -149,18 +155,27 @@ export default function NavBar() {
 
           <li className="collapse-list-item">
             <a
-              href="#calificaciones"
+              href="#acciones"
               data-toggle="collapse"
               aria-expanded="false"
               class="dropdown-toggle nav-link"
             >
               Acciones
             </a>
-            <ul class="collapse collapse-menu" id="calificaciones">
-              <li style={{ listStyle: "none" }}>
-                <a href="-" className="collapse-item">
+            <ul class="collapse collapse-menu" id="acciones">
+            <li
+                style={{ listStyle: "none" }}
+                onClick={(e) => {
+                  document
+                    .getElementById("acciones")
+                    .classList.remove("show");
+
+                  handleClick(e);
+                }}
+              >
+                <NavLink to="/asignacionbecas" className="collapse-item">
                   Asignación de Becas
-                </a>
+                </NavLink>
               </li>
               <li style={{ listStyle: "none" }}>
                 <a href="-" className="collapse-item">
@@ -171,7 +186,7 @@ export default function NavBar() {
                 style={{ listStyle: "none" }}
                 onClick={(e) => {
                   document
-                    .getElementById("calificaciones")
+                    .getElementById("acciones")
                     .classList.remove("show");
 
                   handleClick(e);
@@ -185,7 +200,7 @@ export default function NavBar() {
                 style={{ listStyle: "none" }}
                 onClick={(e) => {
                   document
-                    .getElementById("calificaciones")
+                    .getElementById("acciones")
                     .classList.remove("show");
 
                   handleClick(e);
@@ -215,18 +230,42 @@ export default function NavBar() {
 
           <li className="collapse-list-item">
             <a
-              href="#inasistencias"
+              href="#caja"
               data-toggle="collapse"
               aria-expanded="false"
               class="dropdown-toggle nav-link"
             >
               Caja
             </a>
-            <ul class="collapse collapse-menu" id="inasistencias">
+            <ul class="collapse collapse-menu" id="caja">
               <li style={{ listStyle: "none" }}>
                 <a href="-" className="collapse-item">
                   Movimientos
                 </a>
+              </li>
+            </ul>
+          </li>
+          <li className="collapse-list-item">
+            <a
+              href="#informes"
+              data-toggle="collapse"
+              aria-expanded="false"
+              class="dropdown-toggle nav-link"
+            >
+              Informes
+            </a>
+            <ul class="collapse collapse-menu" id="informes">
+              <li
+                style={{ listStyle: "none" }}
+                onClick={(e) => {
+                  document.getElementById("informes").classList.remove("show");
+
+                  handleClick(e);
+                }}
+              >
+                <NavLink to="/informesgenerales" className="collapse-item">
+                  Generales
+                </NavLink>
               </li>
             </ul>
           </li>

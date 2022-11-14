@@ -179,3 +179,10 @@ export function cargarUsuario(usuario) {
     payload: usuario,
   };
 }
+
+export function cargarInformes(informes) {
+  return {
+    type: "CARGAR_INFORMES",
+    payload: informes,
+  };
+}

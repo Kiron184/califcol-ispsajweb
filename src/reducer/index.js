@@ -20,6 +20,7 @@ const initialState = {
   codificador: [],
   usuarios: [],
   usuario: [],
+  informes: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -204,6 +205,12 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         usuario: action.payload,
       };
+    case "CARGAR_INFORMES":
+      return {
+        ...state,
+        informes: action.payload,
+      };
+
     default:
       return { ...state };
   }

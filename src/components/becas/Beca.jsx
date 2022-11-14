@@ -116,8 +116,8 @@ export default function Beca() {
           <hr className="w-100 mx-0" />
           <div className="d-flex justify-content-between w-100">
             <h4>
-              Informacion de la Beca {"  "}
-              <strong className="ml-3 text-secondary font-weight-normal">
+              Informacion de la Beca{" "}
+              <strong style={{ fontWeight: "500" }} className="text-secondary">
                 {input.nombre}
               </strong>
             </h4>
@@ -188,7 +188,7 @@ export default function Beca() {
             aria-labelledby="datos-tab"
           >
             {/* DATOS BASICOS */}
-            <div style={{ fontSize: "13px" }} className="w-100 mt-3">
+            <div style={{ fontSize: "13px" }} className="w-75 mt-3 ml-2">
               <form
                 name="f_abm_docentes"
                 id="id_abm_docentes"

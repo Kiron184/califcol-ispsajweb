@@ -143,19 +143,19 @@ export default function Conceptos({ id }) {
             {conceptos &&
               conceptos?.map((m) => (
                 <tr key={m[0]}>
-                  <td>
+                  <td className="align-middle p-0">
                     <div className="text-center">
                       <p className="fw-bold my-auto align-middle">{m[0]}</p>
                     </div>
                   </td>
-                  <td>
+                  <td className="align-middle p-0">
                     <div className="text-left">
                       <p className="fw-bold my-auto ml-3 align-middle text-nowrap">
                         {m[1].toUpperCase()}
                       </p>
                     </div>
                   </td>
-                  <td className="text-center">
+                  <td className="align-middle p-0">
                     <button
                       className="btn btn-link btn-sm btn-rounded"
                       onClick={(e) => {

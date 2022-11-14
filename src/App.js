@@ -15,6 +15,10 @@ import Codificadores from "./components/Codificadores/Codificadores";
 import Codificador from "./components/Codificadores/Codificador";
 import Usuarios from "./components/Usuarios/Usuarios";
 import Usuario from "./components/Usuarios/Usuario";
+import Parametros from "./components/Parametros/Parametros";
+import Generales from "./components/Informes/Generales";
+import AsignacionBecas from "./components/AsignacionBecas/AsignacionBecas";
+import AsignacionBeca from "./components/AsignacionBecas/AsignacionBeca";
 
 function App() {
   return (
@@ -43,6 +47,10 @@ function App() {
           />
           <Route path="/usuarios" element={<Usuarios />} />
           <Route path="/usuarios/:id" element={<Usuario />} />
+          <Route path="/parametros" element={<Parametros />} />
+          <Route path="/informesgenerales" element={<Generales />} />
+          <Route path="/asignacionbecas" element={<AsignacionBecas />} />
+          <Route path="/asignacionbecas/:id" element={<AsignacionBeca />} />
         </Routes>
       </Container>
     </React.Fragment>
