@@ -81,11 +81,13 @@ export default function TablaAranceles({ ciclo, mes }) {
     if (order === "ASC") {
       if (col === "importe1" || col === "importe2" || col === "arancel") {
         const sorted = [...aranceles].sort((a, b) =>
-          parseFloat(a.col) > parseFloat(b.col) ? 1 : -1
+          parseFloat(a[col]) > parseFloat(b[col]) ? 1 : -1
         );
         dispatch(cargarAranceles(sorted));
       } else {
-        const sorted = [...aranceles].sort((a, b) => (a.col > b.col ? 1 : -1));
+        const sorted = [...aranceles].sort((a, b) =>
+          a[col] > b[col] ? 1 : -1
+        );
         dispatch(cargarAranceles(sorted));
       }
       setOrder("DESC");
@@ -94,11 +96,13 @@ export default function TablaAranceles({ ciclo, mes }) {
     if (order === "DESC") {
       if (col === "importe1" || col === "importe2" || col === "arancel") {
         const sorted = [...aranceles].sort((a, b) =>
-          parseFloat(a.col) < parseFloat(b.col) ? 1 : -1
+          parseFloat(a[col]) < parseFloat(b[col]) ? 1 : -1
         );
         dispatch(cargarAranceles(sorted));
       } else {
-        const sorted = [...aranceles].sort((a, b) => (a.col < b.col ? 1 : -1));
+        const sorted = [...aranceles].sort((a, b) =>
+          a[col] < b[col] ? 1 : -1
+        );
         dispatch(cargarAranceles(sorted));
       }
       setOrder("ASC");

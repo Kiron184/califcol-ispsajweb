@@ -50,7 +50,10 @@ function App() {
           <Route path="/parametros" element={<Parametros />} />
           <Route path="/informesgenerales" element={<Generales />} />
           <Route path="/asignacionbecas" element={<AsignacionBecas />} />
-          <Route path="/asignacionbecas/:id" element={<AsignacionBeca />} />
+          <Route
+            path="/asignacionbecas/:id/:anulado"
+            element={<AsignacionBeca />}
+          />
         </Routes>
       </Container>
     </React.Fragment>

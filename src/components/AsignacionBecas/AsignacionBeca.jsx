@@ -6,7 +6,7 @@ import arrowLeft from "../../utils/left-arrow.png";
 import Swal from "sweetalert2";
 
 export default function AsignacionBeca() {
-  const { id } = useParams();
+  const { id, anulado } = useParams();
   const navigation = useNavigate();
   const [comboAlumnos, setComboAlumnos] = useState([]);
   const [comboBecas, setComboBecas] = useState([]);
@@ -144,23 +144,22 @@ export default function AsignacionBeca() {
     document.querySelector(".contenedor").classList.remove("active-contenedor");
   }
 
-  console.log(input);
   return (
     <React.Fragment>
       <div className="pr-5 pt-3 pl-3 pl-lg-5 ml-lg-5 contenedor">
         <div className="pt-5">
           <div>
-            <h4 className="">Becas</h4>
+            <h4 className="">Asignación de Becas</h4>
             <p className="text-secondary">
-              Crear y gestionar los datos de las Becas.
+              Crear y gestionar los datos de las Becas Asignadas.
             </p>
           </div>
           <hr className="w-100 mx-0" />
           <div className="d-flex justify-content-between w-100">
             <h4>
-              Informacion de la Beca{" "}
+              Informacion de la Beca de{" "}
               <strong style={{ fontWeight: "500" }} className="text-secondary">
-                {input.nombre}
+                {input.alumno}
               </strong>
             </h4>
             <div>
@@ -185,7 +184,9 @@ export default function AsignacionBeca() {
             </div>
           </div>
           <hr className="w-100 mx-0" />
-          <p className="text-secondary">Gestionar la informacion de la Beca</p>
+          <p className="text-secondary">
+            Gestionar la informacion de la Asignación de la Beca
+          </p>
         </div>
         <nav>
           <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -231,11 +232,12 @@ export default function AsignacionBeca() {
                   </label>
                   <div className="col-sm-4 col-lg-3">
                     <select
+                      required
                       name="idalumno"
                       className="form-control col-12 "
                       onChange={(e) => handleChange(e)}
                     >
-                      <option selected value={0}>
+                      <option selected value="">
                         Seleccional un Alumno
                       </option>
                       {comboAlumnos &&
@@ -264,16 +266,21 @@ export default function AsignacionBeca() {
                   </label>
                   <div className="col-sm-4 col-lg-3">
                     <select
+                      required
                       name="idbeca"
                       className="form-control col-12 "
                       onChange={(e) => {
                         document.getElementById("valor").value = document
                           .getElementById(`${e.target.value}`)
-                          .innerHTML.split(" ")[2];
+                          .innerHTML.split(" ")[2]
+                          ? document
+                              .getElementById(`${e.target.value}`)
+                              .innerHTML.split(" ")[2]
+                          : "$1000";
                         handleChange(e);
                       }}
                     >
-                      <option selected value={0}>
+                      <option selected value="">
                         Seleccional Beca
                       </option>
                       {comboBecas &&
@@ -285,7 +292,7 @@ export default function AsignacionBeca() {
                               id={beca[1]}
                               selected={input.idbeca === beca[1]}
                             >
-                              {beca[0]}
+                              {beca[1] === "12" ? "BECA AL 100%" : beca[0]}
                             </option>
                           );
                         })}
@@ -307,9 +314,9 @@ export default function AsignacionBeca() {
                       className="form-control form-control-sm text-right"
                       id="valor"
                       name={"valor"}
-                      Value={input.valor}
+                      Value={input.valor === "1000%" ? "$1000" : input.valor}
                       onChange={(e) => handleChange(e)}
-                      placeholder={beca.valor ? beca.valor : "Ingrese Valor"}
+                      placeholder={beca.valor ? beca.valor : ""}
                     ></input>
                   </div>
                 </div>
@@ -359,32 +366,53 @@ export default function AsignacionBeca() {
                     ></input>
                   </div>
                 </div>
-
-                <div className="w-100 fixed-bottom d-flex justify-content-end border-top bg-light pr-5">
-                  <button
-                    type="button"
-                    className="btn btn-secondary px-3 m-3 text-light shadow-sm"
-                    id="id_cancelar"
-                    onClick={() => {
-                      navigation("/asignacionbecas");
-                      document
-                        .querySelector(".navbar")
-                        .classList.remove("active-nav");
-                      document
-                        .querySelector(".contenedor")
-                        .classList.remove("active-contenedor");
-                    }}
-                  >
-                    Descartar Cambios
-                  </button>
-                  <button
-                    type="submit"
-                    className="btn btn-primary px-3 m-3 text-light shadow-sm"
-                    id="id_grabar"
-                  >
-                    Guardar
-                  </button>
-                </div>
+                {anulado !== "S" ? (
+                  <div className="w-100 fixed-bottom d-flex justify-content-end border-top bg-light pr-5">
+                    <button
+                      type="button"
+                      className="btn btn-secondary px-3 m-3 text-light shadow-sm"
+                      id="id_cancelar"
+                      onClick={() => {
+                        navigation("/asignacionbecas");
+                        document
+                          .querySelector(".navbar")
+                          .classList.remove("active-nav");
+                        document
+                          .querySelector(".contenedor")
+                          .classList.remove("active-contenedor");
+                      }}
+                    >
+                      Descartar Cambios
+                    </button>
+                    <button
+                      type="submit"
+                      className="btn btn-primary px-3 m-3 text-light shadow-sm"
+                      id="id_grabar"
+                    >
+                      Guardar
+                    </button>
+                  </div>
+                ) : (
+                  <div className="w-100 fixed-bottom d-flex justify-content-between border-top bg-light pr-5">
+                    <p className="text-danger h5 mx-5 my-3">ASIG. ANULADA</p>
+                    <button
+                      type="button"
+                      className="btn btn-secondary px-3 m-3 text-light shadow-sm"
+                      id="id_cancelar"
+                      onClick={() => {
+                        navigation("/asignacionbecas");
+                        document
+                          .querySelector(".navbar")
+                          .classList.remove("active-nav");
+                        document
+                          .querySelector(".contenedor")
+                          .classList.remove("active-contenedor");
+                      }}
+                    >
+                      Salir
+                    </button>
+                  </div>
+                )}
               </form>
             </div>
           </div>

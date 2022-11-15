@@ -75,7 +75,7 @@ export default function TablaCodificadores({ filter }) {
 
     if (order === "ASC") {
       const sorted = [...codificadores].sort((a, b) =>
-        a.col > b.col ? 1 : -1
+        a[col] > b[col] ? 1 : -1
       );
       dispatch(cargarCodificadores(sorted));
       setOrder("DESC");
@@ -83,7 +83,7 @@ export default function TablaCodificadores({ filter }) {
 
     if (order === "DESC") {
       const sorted = [...codificadores].sort((a, b) =>
-        a.col < b.col ? 1 : -1
+        a[col] < b[col] ? 1 : -1
       );
       dispatch(cargarCodificadores(sorted));
       setOrder("ASC");

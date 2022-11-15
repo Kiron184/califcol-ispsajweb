@@ -79,13 +79,13 @@ export default function TablaUsuarios({ name }) {
     }
 
     if (order === "ASC") {
-      const sorted = [...usuarios].sort((a, b) => (a.col > b.col ? 1 : -1));
+      const sorted = [...usuarios].sort((a, b) => (a[col] > b[col] ? 1 : -1));
       dispatch(cargarUsuarios(sorted));
       setOrder("DESC");
     }
 
     if (order === "DESC") {
-      const sorted = [...usuarios].sort((a, b) => (a.col < b.col ? 1 : -1));
+      const sorted = [...usuarios].sort((a, b) => (a[col] < b[col] ? 1 : -1));
       dispatch(cargarUsuarios(sorted));
       setOrder("ASC");
     }

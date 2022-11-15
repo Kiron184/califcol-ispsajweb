@@ -7,8 +7,7 @@ import "../../style/styles.css";
 export default function AsignacionBecas() {
   const [search, setSearch] = useState("");
   const [comboCiclos, setComboCiclos] = useState([]);
-  const [ciclo, setCiclo] = useState('2022');
-
+  const [ciclo, setCiclo] = useState("2022");
 
   async function CargarComboCiclos() {
     await axios
@@ -41,7 +40,7 @@ export default function AsignacionBecas() {
         <hr className="w-100 mx-0" />
         <div className="col col-lg-6 p-0">
           <div className="d-flex flex-md-row flex-column">
-          <select
+            <select
               className="form-control col-3 col-sm-1 col-lg-1 col-xl-2 mr-1"
               onChange={(e) => {
                 ActualizarCiclo(e);
@@ -70,7 +69,7 @@ export default function AsignacionBecas() {
 
             <NavLink
               className="align-self-start btn btn-primary rounded"
-              to="/asignacionbecas/0"
+              to="/asignacionbecas/0/0"
               onClick={(e) => {
                 document
                   .querySelector(".navbar")

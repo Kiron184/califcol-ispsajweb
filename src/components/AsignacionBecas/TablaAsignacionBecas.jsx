@@ -35,30 +35,48 @@ export default function TablaAsignacionBecas({ name, ciclo }) {
   function orden(e, col) {
     e.preventDefault();
 
-    let i = col === "codigo" ? 1 : 0;
-
     if (document.querySelector(`.${col}`).innerHTML.slice(-1) === "↑") {
-      if (col === "codigo") {
-        document.querySelector(`.${col}`).innerHTML = `Código ↓`;
-      } else if (col === "nombre") {
-        document.querySelector(`.${col}`).innerHTML = `Nombre ↓`;
+      if (col === "id") {
+        document.querySelector(`.${col}`).innerHTML = `N° ↓`;
+      } else if (col === "docnro") {
+        document.querySelector(`.${col}`).innerHTML = `Documento ↓`;
+      } else if (col === "alumno") {
+        document.querySelector(`.${col}`).innerHTML = `Alumno ↓`;
+      } else if (col === "nivel") {
+        document.querySelector(`.${col}`).innerHTML = `Nivel ↓`;
+      } else if (col === "curso") {
+        document.querySelector(`.${col}`).innerHTML = `Curso ↓`;
+      } else if (col === "beca") {
+        document.querySelector(`.${col}`).innerHTML = `Beca ↓`;
+      } else if (col === "txvalor") {
+        document.querySelector(`.${col}`).innerHTML = `Valor ↓`;
       }
     } else {
-      if (col === "codigo") {
-        document.querySelector(`.${col}`).innerHTML = `Código ↑`;
-      } else if (col === "nombre") {
-        document.querySelector(`.${col}`).innerHTML = `Nombre ↑`;
+      if (col === "id") {
+        document.querySelector(`.${col}`).innerHTML = `N° ↑`;
+      } else if (col === "docnro") {
+        document.querySelector(`.${col}`).innerHTML = `Documento ↑`;
+      } else if (col === "alumno") {
+        document.querySelector(`.${col}`).innerHTML = `Alumno ↑`;
+      } else if (col === "nivel") {
+        document.querySelector(`.${col}`).innerHTML = `Nivel ↑`;
+      } else if (col === "curso") {
+        document.querySelector(`.${col}`).innerHTML = `Curso ↑`;
+      } else if (col === "beca") {
+        document.querySelector(`.${col}`).innerHTML = `Beca ↑`;
+      } else if (col === "txvalor") {
+        document.querySelector(`.${col}`).innerHTML = `Valor ↑`;
       }
     }
 
     if (order === "ASC") {
-      const sorted = [...tabla].sort((a, b) => (a[i] > b[i] ? 1 : -1));
+      const sorted = [...tabla].sort((a, b) => (a[col] > b[col] ? 1 : -1));
       setTabla(sorted);
       setOrder("DESC");
     }
 
     if (order === "DESC") {
-      const sorted = [...tabla].sort((a, b) => (a[i] < b[i] ? 1 : -1));
+      const sorted = [...tabla].sort((a, b) => (a[col] < b[col] ? 1 : -1));
       setTabla(sorted);
       setOrder("ASC");
     }
@@ -81,6 +99,7 @@ export default function TablaAsignacionBecas({ name, ciclo }) {
         console.log(response.data);
       });
   }
+
   return (
     <div style={{ height: "900px" }} className="table-responsive">
       <table className="w-100 table-condensed table-hover table-bordered text-center table border-top border-secondary">
@@ -129,15 +148,18 @@ export default function TablaAsignacionBecas({ name, ciclo }) {
               Valor ↑
             </th>
             <th className="col-1 text-nowrap">Editar</th>
-            <th className="col-1 text-nowrap">Eliminar</th>
+            <th className="col-1 text-nowrap">Anular</th>
           </tr>
         </thead>
         <tbody>
           {tabla &&
             tabla.map((b) => (
               <tr
-                style={{ cursor: "pointer" }}
-                className={b.anulado === "S" ? "bg-danger" : ""}
+                style={
+                  b.anulado !== "S"
+                    ? { cursor: "pointer" }
+                    : { cursor: "pointer", backgroundColor: "#f2dede" }
+                }
                 key={b.id}
                 onClick={(e) => {
                   document
@@ -146,7 +168,7 @@ export default function TablaAsignacionBecas({ name, ciclo }) {
                   document
                     .querySelector(".contenedor")
                     .classList.remove("active-contenedor");
-                  navigation(`/asignacionbecas/${b.id}`);
+                  navigation(`/asignacionbecas/${b.id}/${b.anulado}`);
                 }}
               >
                 <td className="align-middle py-0">
@@ -209,19 +231,19 @@ export default function TablaAsignacionBecas({ name, ciclo }) {
                     </p>
                   </div>
                 </td>
-                <td className="text-left align-middle py-0">
+                <td className="text-right align-middle py-0">
                   <div className="">
                     <p
                       style={{ fontSize: "13px" }}
                       className="fw-bold mb-0 text-nowrap "
                     >
-                      {b.txvalor}
+                      {b.txvalor === "1000%" ? "$1000" : b.txvalor}
                     </p>
                   </div>
                 </td>
                 <td className="align-middle mb-0 py-0">
                   <NavLink
-                    to={"/asignacionbecas/" + b.id}
+                    to={"/asignacionbecas/" + b.id + `/${b.anulado}`}
                     type="button"
                     className="p-1 btn"
                     id={b.id}
@@ -259,13 +281,13 @@ export default function TablaAsignacionBecas({ name, ciclo }) {
                       });
                     }}
                   >
-                    <img width="20px" alt="edit" src={trash} />
+                    <img width="15px" alt="edit" src={trash} />
                   </button>
                 </td>
               </tr>
             ))}
           <tr>
-            <td colSpan="4">
+            <td colSpan="9">
               <div>
                 {tabla === [] || !tabla ? (
                   <div className="footer text-center">
