@@ -23,10 +23,9 @@ export default function AsignacionBeca() {
     idbeca: "",
     nivel: "",
     idalumno: "",
-    beca: "",
     valor: "",
-    fdesde: "",
-    fhasta: "",
+    fdesde: `${year}-01-01`,
+    fhasta: `${year}-12-31`,
   });
 
   async function CargarComboAlumnos() {
@@ -68,7 +67,6 @@ export default function AsignacionBeca() {
             idbeca: response.data[0].idbeca,
             nivel: response.data[0].nivel,
             idalumno: response.data[0].idalumno,
-            beca: response.data[0].beca,
             valor: response.data[0].txvalor,
             fdesde: response.data[0].fdesde,
             fhasta: response.data[0].fhasta,
@@ -104,11 +102,11 @@ export default function AsignacionBeca() {
         )
         .then((response) => {
           console.log(response.data);
-          if (response.data === "No se puede completar la operación") {
+          if (typeof response.data !== "number") {
             Swal.fire({
               title: "Error al asignar Beca!",
               icon: "error",
-              html: `${response.data}`,
+              html: `${response.data.split(".")[0]}.`,
               showCloseButton: true,
             }).then((result) => {
               if (result.isConfirmed) {
